@@ -1,15 +1,16 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="CapsuleMesh" id=1]
+[ext_resource path="res://scenes/Plane.tscn" type="PackedScene" id=1]
 
 [node name="World" type="Spatial"]
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( -1.32561e-08, 0, 0.303264, 0, 0.19383, 0, -0.206863, 0, -9.04226e-09, 0, 0, 0 )
-mesh = SubResource( 1 )
-material/0 = null
+[node name="Plane" parent="." instance=ExtResource( 1 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 0, 0, 0 )
+initial_angle = 5.0
 
-[node name="Camera" type="Camera" parent="MeshInstance"]
-transform = Transform( -1.44137e-07, 0, -4.83412, 0, 5.15915, 0, 3.29746, 0, -2.11306e-07, -14.6591, 0, -6.40771e-07 )
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50, -30, 10 )
 projection = 1
-size = 5.27187
+current = true
+fov = 91.049
+size = 86.97
