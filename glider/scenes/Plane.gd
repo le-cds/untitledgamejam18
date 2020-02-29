@@ -20,19 +20,21 @@ var _velocity: Vector3 = Vector3.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    rotation = Vector3(0.0, 0.0, deg2rad(initial_angle))
+    rotation = Vector3(0.0, 90.0, deg2rad(initial_angle))
     _velocity = initial_velocity
 
 func _physics_process(delta):
-    var _lift_amplitude = 0.5 * lift_coefficient * air_density * _velocity.x * _velocity.x * wing_area
-    var _drag_amplitude = 0.5 * drag_coefficient * air_density * _velocity.x * _velocity.x * wing_area
+    print(_velocity)
+    var _lift_amplitude = 0.5 * lift_coefficient * air_density * _velocity.length_squared() * wing_area
+    var _drag_amplitude = 0.5 * drag_coefficient * air_density * _velocity.length_squared() * wing_area
     var _weight_force = plane_mass * gravity
 
     var _force = Vector3(
-        _lift_amplitude * sin(rotation.x) - _drag_amplitude * cos(rotation.x),
-        _lift_amplitude * cos(rotation.x) + _drag_amplitude * sin(rotation.x) - _weight_force,
+        _lift_amplitude * sin(rotation.z) - _drag_amplitude * cos(rotation.z),
+        _lift_amplitude * cos(rotation.z) + _drag_amplitude * sin(rotation.z) - _weight_force,
         0.0
     )
+    print(_lift_amplitude)
 
     var _acceleration = _force / plane_mass
 
