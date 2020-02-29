@@ -28,8 +28,10 @@ polygon = PoolVector2Array( -49.9383, -14.9157, -39.2586, -15.0581, -30.8572, -7
 
 [node name="RearWheelRay" type="RayCast2D" parent="."]
 position = Vector2( 1.17271, 15.0892 )
+enabled = true
 cast_to = Vector2( 0, 3 )
 
 [node name="FrontWheelRay" type="RayCast2D" parent="."]
 position = Vector2( 34.3127, 15.2095 )
+enabled = true
 cast_to = Vector2( 0, 3 )

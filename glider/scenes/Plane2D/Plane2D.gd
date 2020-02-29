@@ -8,9 +8,13 @@ const SCALE := 12.0
 var _gravity := GRAVITY_STANDARD
 var _velocity := Vector2()
 
-var _stop_alpha := 0.0
+var _stop_alpha := 0.5
 var _on_floor := false
 var stop_duration = 3.0
+
+
+onready var _rear_wheel_ray = $RearWheelRay
+onready var _front_wheel_ray = $FrontWheelRay
 
 
 func _ready() -> void:
@@ -35,7 +39,6 @@ func _physics_process(delta: float) -> void:
     move_and_slide(_velocity)
 
     var slide_count = get_slide_count()
-    print(slide_count)
     if slide_count > 0 and not _on_floor:
         _on_floor = true
         _stop_alpha = 0.0
@@ -43,5 +46,15 @@ func _physics_process(delta: float) -> void:
     if slide_count > 0:
         _stop_alpha += delta * slide_count
         var collision: KinematicCollision2D = get_slide_collision(0)
-        _velocity.x = lerp(_velocity.x, 0, _stop_alpha / stop_duration)
-        # print(_velocity.x)
+        _velocity.x = lerp(_velocity.x, 0.001, 0.01)
+
+    if _rear_wheel_ray.is_colliding() and not _front_wheel_ray.is_colliding():
+        var normal = _rear_wheel_ray.get_collision_normal()
+        var angle = normal.angle_to(Vector2.UP)
+        rotation -= angle
+
+    if _front_wheel_ray.is_colliding() and not _rear_wheel_ray.is_colliding():
+        var normal = _front_wheel_ray.get_collision_normal()
+        var angle = normal.angle_to(Vector2.UP)
+        print(rad2deg(angle))
+        rotation += angle
