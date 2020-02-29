@@ -6,4 +6,9 @@
 
 [node name="Plane2D" parent="." instance=ExtResource( 1 )]
 position = Vector2( 103.775, 211.271 )
-initial_velocity = Vector2( 40, 0 )
+plane_mass = 2500.0
+lift_coefficient = 2.0
+drag_coefficient = 1.0
+air_density = 1.2
+initial_velocity = Vector2( 20, 20 )
+initial_angle = 34.0

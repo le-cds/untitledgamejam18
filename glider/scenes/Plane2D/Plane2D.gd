@@ -19,30 +19,28 @@ var _velocity: Vector2 = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	rotation = deg2rad(initial_angle)
-	_velocity = initial_velocity
+    rotation = deg2rad(initial_angle)
+    _velocity = initial_velocity
 
 func _physics_process(delta):
-#	print(_velocity)
-	var _lift_amplitude = 0.5 * lift_coefficient * air_density * _velocity.x * _velocity.x * wing_area
-	var _drag_amplitude = 0.5 * drag_coefficient * air_density * _velocity.x * _velocity.x * wing_area
-	var _weight_force = plane_mass * gravity
+    # print(_velocity)
+    var _lift_amplitude = 0.5 * lift_coefficient * air_density * _velocity.x * _velocity.x * wing_area
+    var _drag_amplitude = 0.5 * drag_coefficient * air_density * _velocity.x * _velocity.x * wing_area
+    var _weight_force = plane_mass * gravity
 
-	var _force = Vector2(
-		_lift_amplitude * sin(rotation) - _drag_amplitude * cos(rotation),
-		-(_lift_amplitude * cos(rotation) + _drag_amplitude * sin(rotation) - _weight_force)
-	)
-#	print(_lift_amplitude)
+    var _force = Vector2(
+        _lift_amplitude * sin(rotation) - _drag_amplitude * cos(rotation),
+        -(_lift_amplitude * cos(rotation) + _drag_amplitude * sin(rotation) - _weight_force)
+    )
+    rotation = atan(_drag_amplitude/_lift_amplitude)
 
-	var _acceleration = _force / plane_mass
+    var _acceleration = _force / plane_mass
 
-	_velocity += _acceleration * delta
+    _velocity += _acceleration * delta
 
-	move_and_collide(_velocity * delta)
-	# var _lift_force = Vector3(sin(_body.rotation.z), 0.0, 0.0) * _lift_amplitude
-	# var _drag_force = Vector3(0.0 ,cos(_body.rotation.z), 0.0) * _lift_amplitude
+    # var _world_velocity = Vector2(_velocity.x * sin(rotation) + _velocity.y, _velocity.y * cos(rotation))
 
-	# var _wing_loading: float = plane_weight / wing_area
+    var _world_velocity = _velocity.rotated(-rotation)
+    print(_velocity)
 
-	# _velocity.x = sqrt(2.0 * gravity * _wing_loading / air_density * lift_coefficient)
-	# _body.move_and_collide(_velocity)
+    move_and_collide(_velocity * delta)

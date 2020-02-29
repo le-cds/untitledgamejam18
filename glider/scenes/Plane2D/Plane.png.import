@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Plane.png-b368921a3f3f4761b311df2424388fe8.stex"
+path="res://.import/Plane.png-c8c315fe0fe6b5b6cf50302891b38fd0.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/Plane/Plane.png"
-dest_files=[ "res://.import/Plane.png-b368921a3f3f4761b311df2424388fe8.stex" ]
+source_file="res://scenes/Plane2D/Plane.png"
+dest_files=[ "res://.import/Plane.png-c8c315fe0fe6b5b6cf50302891b38fd0.stex" ]
 
 [params]
 
