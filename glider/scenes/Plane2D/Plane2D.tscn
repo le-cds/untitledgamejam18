@@ -1,16 +1,35 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://scenes/Plane2D/Plane.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Plane2D/Plane2D.gd" type="Script" id=2]
 
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 50.0976, 15.102 )
+[sub_resource type="CircleShape2D" id=1]
+radius = 3.03322
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 2.61191
 
 [node name="Plane2D" type="KinematicBody2D"]
 script = ExtResource( 2 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
+
+[node name="RearWheel" type="CollisionShape2D" parent="."]
+position = Vector2( 1.13917, 12.1037 )
+shape = SubResource( 1 )
+
+[node name="FrontWheel" type="CollisionShape2D" parent="."]
+position = Vector2( 34.3174, 12.6732 )
+shape = SubResource( 2 )
+
+[node name="PlaneBody" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -49.9383, -14.9157, -39.2586, -15.0581, -30.8572, -7.51112, -24.8766, -5.37518, -13.2001, -5.37518, 11.5768, -6.79914, 24.5348, -6.51435, 42.4767, -3.95122, 49.8813, -1.1033, 50.0237, 3.02618, 44.755, 5.8741, 36.4961, 7.86765, 35.3569, 9.7188, 33.3634, 9.5764, 31.3698, 7.58286, 6.02332, 7.86765, 2.03624, 9.7188, 2.17863, 7.58286, -4.22919, 7.86765, -19.4656, 5.8741, -37.4075, 3.16858, -41.2521, 1.88702, -45.9512, -4.09361, -45.9512, -7.93831 )
+
+[node name="RearWheelRay" type="RayCast2D" parent="."]
+position = Vector2( 1.17271, 15.0892 )
+cast_to = Vector2( 0, 3 )
+
+[node name="FrontWheelRay" type="RayCast2D" parent="."]
+position = Vector2( 34.3127, 15.2095 )
+cast_to = Vector2( 0, 3 )
