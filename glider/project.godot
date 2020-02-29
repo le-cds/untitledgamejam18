@@ -42,6 +42,10 @@ config/name="Glider"
 run/main_scene="res://scenes/World2D.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Constants="*res://scripts/Constants.gd"
+
 [display]
 
 window/size/width=960
