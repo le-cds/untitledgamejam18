@@ -1,21 +1,36 @@
 extends KinematicBody2D
 
+################################################################################
+# Constants
+
+# Horizontal air speed.
 const SPEED := 15.0
+# Usual gravity excerted by Earth.
 const GRAVITY_STANDARD := 9.81
+# Repelling, anti-gravity excerted when the player presses a button.
 const GRAVITY_UP := -15.0
+# Scale factor by which the other values are scaled for the game to be fun...
 const SCALE := 12.0
 
-var _gravity := GRAVITY_STANDARD
-var _velocity := Vector2()
 
-var _stop_alpha := 0.5
-var _on_floor := false
-var stop_duration = 3.0
-
+################################################################################
+# Scene Objects
 
 onready var _rear_wheel_ray = $RearWheelRay
 onready var _front_wheel_ray = $FrontWheelRay
 
+
+################################################################################
+# State
+
+# The plane's current velocity.
+var _velocity := Vector2()
+# Whether the plane has touched down.
+var _on_floor := false
+
+
+################################################################################
+# Scene Lifecycle
 
 func _ready() -> void:
     _velocity.x = SPEED * SCALE
@@ -23,17 +38,18 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-
+    var _gravity := GRAVITY_STANDARD * SCALE
+    
+    # We'll only repell and rotate the plane if we're still in the air. Once we
+    # have landed, we do things a little differently to keep the aircraft from
+    # taking off again
     if not _on_floor:
         if Input.is_action_pressed("game_gravity_switch"):
             _gravity = GRAVITY_UP * SCALE
-        else:
-            _gravity = GRAVITY_STANDARD * SCALE
 
         rotation = _velocity.angle()
-    else:
-        _gravity = GRAVITY_STANDARD * SCALE
-
+    
+    # Have gravity modify our vertical speed
     _velocity.y += _gravity * delta
 
     # Don't know, which argument permutation is better
@@ -41,21 +57,20 @@ func _physics_process(delta: float) -> void:
     # move_and_slide(_velocity)
 
     var slide_count = get_slide_count()
-    if slide_count > 0 and not _on_floor:
-        _on_floor = true
-        _stop_alpha = 0.0
-
     if slide_count > 0:
-        _stop_alpha += delta * slide_count
-        var collision: KinematicCollision2D = get_slide_collision(0)
+        # Touch-down! Yankees Three!
+        _on_floor = true
+        
+        # Slow the plane a bit
         _velocity.x = lerp(_velocity.x, 0.001, 0.01)
 
-    if _front_wheel_ray.is_colliding() and not _rear_wheel_ray.is_colliding():
-        var normal = _front_wheel_ray.get_collision_normal()
-        var angle = normal.angle_to(Vector2.UP)
-        rotation = lerp(rotation, -angle, 0.1)
+    # Cange pitch of the plane if only one of its wheels has touched down
+    _touch_down(_front_wheel_ray, _rear_wheel_ray)
+    _touch_down(_rear_wheel_ray, _front_wheel_ray)
 
-    if _rear_wheel_ray.is_colliding() and not _front_wheel_ray.is_colliding():
-        var normal = _rear_wheel_ray.get_collision_normal()
-        var angle = normal.angle_to(Vector2.UP)
+
+func _touch_down(touch_wheel: RayCast2D, flying_wheel: RayCast2D) -> void:
+    if touch_wheel.is_colliding() and not flying_wheel.is_colliding():
+        var normal: Vector2 = touch_wheel.get_collision_normal()
+        var angle: float = normal.angle_to(Vector2.UP)
         rotation = lerp(rotation, -angle, 0.1)
