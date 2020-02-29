@@ -6,4 +6,3 @@
 
 [node name="Plane2D" parent="." instance=ExtResource( 1 )]
 position = Vector2( 103.775, 211.271 )
-initial_velocity = Vector2( 40, 0 )
