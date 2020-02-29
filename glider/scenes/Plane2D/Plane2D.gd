@@ -67,7 +67,6 @@ func _physics_process(delta: float) -> void:
 
     # Don't know, which argument permutation is better
     move_and_slide(_velocity, Vector2.UP, false, 4, PI/2)
-    # move_and_slide(_velocity)
 
     var slide_count = get_slide_count()
     if slide_count > 0:
