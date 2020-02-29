@@ -36,7 +36,9 @@ func _physics_process(delta: float) -> void:
 
     _velocity.y += _gravity * delta
 
-    move_and_slide(_velocity)
+    # Don't know, which argument permutation is better
+    move_and_slide(_velocity, Vector2.UP, false, 4, PI/2)
+    # move_and_slide(_velocity)
 
     var slide_count = get_slide_count()
     if slide_count > 0 and not _on_floor:
@@ -48,13 +50,12 @@ func _physics_process(delta: float) -> void:
         var collision: KinematicCollision2D = get_slide_collision(0)
         _velocity.x = lerp(_velocity.x, 0.001, 0.01)
 
-    if _rear_wheel_ray.is_colliding() and not _front_wheel_ray.is_colliding():
-        var normal = _rear_wheel_ray.get_collision_normal()
-        var angle = normal.angle_to(Vector2.UP)
-        rotation -= angle
-
     if _front_wheel_ray.is_colliding() and not _rear_wheel_ray.is_colliding():
         var normal = _front_wheel_ray.get_collision_normal()
         var angle = normal.angle_to(Vector2.UP)
-        print(rad2deg(angle))
-        rotation += angle
+        rotation = lerp(rotation, -angle, 0.1)
+
+    if _rear_wheel_ray.is_colliding() and not _front_wheel_ray.is_colliding():
+        var normal = _rear_wheel_ray.get_collision_normal()
+        var angle = normal.angle_to(Vector2.UP)
+        rotation = lerp(rotation, -angle, 0.1)
