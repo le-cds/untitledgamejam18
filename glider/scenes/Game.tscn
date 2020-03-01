@@ -3,8 +3,7 @@
 [ext_resource path="res://lib/Screenshot.gd" type="Script" id=1]
 [ext_resource path="res://lib/StateMachine.gd" type="Script" id=2]
 [ext_resource path="res://scenes/Game.gd" type="Script" id=3]
-[ext_resource path="res://scenes/World.tscn" type="PackedScene" id=4]
-
+[ext_resource path="res://scenes/Levels/01/Level01.tscn" type="PackedScene" id=4]
 
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
@@ -17,4 +16,5 @@ file_prefix = "glider"
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
-[node name="World2D" parent="StateMachine" instance=ExtResource( 4 )]
+[node name="Level01" parent="StateMachine" instance=ExtResource( 4 )]
+state_id = "level01"

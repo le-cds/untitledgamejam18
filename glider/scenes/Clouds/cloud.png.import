@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/clouds.png-711afff7d942ef74d19e1bf5edfd039d.stex"
+path="res://.import/cloud.png-1edfafe3b073bd1c3d92b3f58577b024.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World/clouds.png"
-dest_files=[ "res://.import/clouds.png-711afff7d942ef74d19e1bf5edfd039d.stex" ]
+source_file="res://scenes/Clouds/cloud.png"
+dest_files=[ "res://.import/cloud.png-1edfafe3b073bd1c3d92b3f58577b024.stex" ]
 
 [params]
 
@@ -19,7 +19,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
-flags/repeat=1
+flags/repeat=0
 flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
