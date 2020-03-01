@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scenes/Effects/explosion.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Effects/Explosion.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Effects/crash.ogg" type="AudioStream" id=3]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 1 )
@@ -58,4 +59,9 @@ script = ExtResource( 2 )
 position = Vector2( 1.6818, -21.3875 )
 frames = SubResource( 11 )
 animation = "explode"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -6.0
+autoplay = true
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_animation_finished"]
