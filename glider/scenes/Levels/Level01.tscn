@@ -11,7 +11,7 @@
 extents = Vector2( 233.744, 136.71 )
 
 [node name="Level01" type="Sprite"]
-position = Vector2( 482.478, 267.448 )
+position = Vector2( 480, 270 )
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
