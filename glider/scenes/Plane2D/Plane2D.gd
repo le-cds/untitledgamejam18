@@ -22,6 +22,7 @@ const SLOW_DOWN_ALPHA := 0.025
 ################################################################################
 # Scene Objects
 
+onready var _plane_body = $PlaneBody
 onready var _rear_wheel_ray = $RearWheelRay
 onready var _front_wheel_ray = $FrontWheelRay
 
@@ -105,10 +106,14 @@ func _is_proper_touch_down() -> bool:
         return false
 
     assert(get_slide_count() > 0)
+    var collision: KinematicCollision2D = get_slide_collision(0)
+
+    # Check if we touched down wheels-first
+    if collision.local_shape == _plane_body:
+        return false
 
     # Find how much of the maximum landing velocity is acceptable for safe touch-down.
     # This depends on the touch down angle.
-    var collision: KinematicCollision2D = get_slide_collision(0)
     var factor := abs(sin(_velocity.angle_to(collision.normal)))
 
     return _velocity.length() <= SAFE_LANDING_VELOCITY * factor
