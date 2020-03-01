@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/Levels/01/Level01.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Levels/02/Level02.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/World/skybox.png" type="Texture" id=2]
 [ext_resource path="res://scenes/World/clouds.png" type="Texture" id=3]
 [ext_resource path="res://scripts/ScrollingTexture.gd" type="Script" id=5]
