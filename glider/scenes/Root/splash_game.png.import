@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/level.png-283194bf2a2c10b9b6d9124fd4dfc2b8.stex"
+path="res://.import/splash_game.png-566cd15be1e2b2ce2cadd1ff5151a8e4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World/level.png"
-dest_files=[ "res://.import/level.png-283194bf2a2c10b9b6d9124fd4dfc2b8.stex" ]
+source_file="res://scenes/Root/splash_game.png"
+dest_files=[ "res://.import/splash_game.png-566cd15be1e2b2ce2cadd1ff5151a8e4.stex" ]
 
 [params]
 

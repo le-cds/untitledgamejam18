@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/level02.png-32e04a5fd7c886a1accbcd5b997b4abe.stex"
+path="res://.import/splash_studio.png-140fc9b9bd9cc3e361cdbaca5299c9f7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World/level02.png"
-dest_files=[ "res://.import/level02.png-32e04a5fd7c886a1accbcd5b997b4abe.stex" ]
+source_file="res://scenes/Root/splash_studio.png"
+dest_files=[ "res://.import/splash_studio.png-140fc9b9bd9cc3e361cdbaca5299c9f7.stex" ]
 
 [params]
 
