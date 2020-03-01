@@ -1,6 +1,5 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/Plane2D/Plane2D.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/World/skybox.png" type="Texture" id=2]
 [ext_resource path="res://scenes/World/clouds.png" type="Texture" id=3]
 [ext_resource path="res://scenes/Levels/Level01.tscn" type="PackedScene" id=4]
@@ -29,9 +28,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 scroll_speed = 0.01
-
-[node name="Plane2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 32.9907, 253.492 )
-scale = Vector2( 0.5, 0.5 )
 
 [node name="Level01" parent="." instance=ExtResource( 4 )]

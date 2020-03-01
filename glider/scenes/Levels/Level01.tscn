@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/World/level.png" type="Texture" id=1]
 [ext_resource path="res://scenes/World/house-tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://scenes/Plane2D/Plane2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/HUD.tscn" type="PackedScene" id=4]
 
 [sub_resource type="PhysicsMaterial" id=1]
@@ -57,3 +58,7 @@ format = 1
 tile_data = PoolIntArray( 65517, 5, 0, 65519, 0, 0, 65522, 6, 0, 65525, 3, 0, 65526, 0, 0, 131056, 6, 0, 131061, 0, 0, 131064, 3, 0, 196594, 5, 0, 196602, 0, 0, 262132, 0, 0, 262135, 3, 0, 262139, 6, 0, 327669, 0, 0, 327673, 0, 0, 327676, 5, 0, 393207, 0, 0, 393210, 5, 0, 393213, 2, 0, 458747, 0, 0, 458751, 4, 0, 393217, 2, 0, 589821, 2, 0, 524290, 0, 0, 524313, 2, 0, 524314, 3, 0, 524315, 4, 0, 589824, 4, 0, 589829, 0, 0, 589832, 5, 0, 589835, 6, 0, 589842, 0, 0, 589849, 2, 0, 589850, 5, 0, 655362, 3, 0, 655381, 4, 0, 655384, 6, 0, 720902, 6, 0, 720908, 5, 0, 720912, 6, 0 )
 
 [node name="HUD" parent="." instance=ExtResource( 4 )]
+
+[node name="Plane2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( -419.342, -168.88 )
+scale = Vector2( 0.6, 0.6 )
