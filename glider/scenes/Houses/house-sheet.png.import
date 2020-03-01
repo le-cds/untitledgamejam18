@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/level02.png-32e04a5fd7c886a1accbcd5b997b4abe.stex"
+path="res://.import/house-sheet.png-94c306149259601dab0c4cd1fefd94fe.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World/level02.png"
-dest_files=[ "res://.import/level02.png-32e04a5fd7c886a1accbcd5b997b4abe.stex" ]
+source_file="res://scenes/Houses/house-sheet.png"
+dest_files=[ "res://.import/house-sheet.png-94c306149259601dab0c4cd1fefd94fe.stex" ]
 
 [params]
 

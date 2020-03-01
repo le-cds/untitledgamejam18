@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/house-sheet.png-11619440435bb97723a8a9935abd87a7.stex"
+path="res://.import/landscape.png-d79c9c694366922158758af0b846d294.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World/house-sheet.png"
-dest_files=[ "res://.import/house-sheet.png-11619440435bb97723a8a9935abd87a7.stex" ]
+source_file="res://scenes/Levels/03/landscape.png"
+dest_files=[ "res://.import/landscape.png-d79c9c694366922158758af0b846d294.stex" ]
 
 [params]
 

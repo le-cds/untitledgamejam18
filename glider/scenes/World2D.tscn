@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scenes/World/skybox.png" type="Texture" id=2]
 [ext_resource path="res://scenes/World/clouds.png" type="Texture" id=3]
-[ext_resource path="res://scenes/Levels/Level01.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Levels/01/Level01.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/ScrollingTexture.gd" type="Script" id=5]
 [ext_resource path="res://materials/ScrollingTexture.material" type="Material" id=6]
 
