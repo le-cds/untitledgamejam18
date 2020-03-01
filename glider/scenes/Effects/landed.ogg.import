@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/landed.ogg-1b079db49a088b4d91da21c08d11624c.oggstr"
+
+[deps]
+
+source_file="res://scenes/Effects/landed.ogg"
+dest_files=[ "res://.import/landed.ogg-1b079db49a088b4d91da21c08d11624c.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
