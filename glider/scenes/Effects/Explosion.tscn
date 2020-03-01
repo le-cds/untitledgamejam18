@@ -55,7 +55,7 @@ animations = [ {
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 2.45557, -51.565 )
+position = Vector2( 1.6818, -21.3875 )
 frames = SubResource( 11 )
 animation = "explode"
 [connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_animation_finished"]
