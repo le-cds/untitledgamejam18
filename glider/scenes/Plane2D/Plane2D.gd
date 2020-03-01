@@ -13,6 +13,8 @@ const GRAVITY_UP := -15.0
 const SCALE := 12.0
 # The maximum velocity where we consider the plane to be standing.
 const STAND_STILL_VELOCITY := 3.0
+# Basically controls the rate of slowing down. Lower value means greater stopping distance
+const SLOW_DOWN_ALPHA := 0.025
 
 
 ################################################################################
@@ -43,16 +45,16 @@ func _ready() -> void:
     # Initialize velocity
     _velocity.x = SPEED * SCALE
     _velocity.y = 0
-    
+
     _connect_to_landing_areas()
 
 
 func _physics_process(delta: float) -> void:
     if _landed:
         return
-    
+
     var _gravity := GRAVITY_STANDARD * SCALE
-    
+
     # We'll only repell and rotate the plane if we're still in the air. Once we
     # have landed, we do things a little differently to keep the aircraft from
     # taking off again
@@ -61,34 +63,34 @@ func _physics_process(delta: float) -> void:
             _gravity = GRAVITY_UP * SCALE
 
         rotation = _velocity.angle()
-    
+
     # Have gravity modify our vertical speed
     _velocity.y += _gravity * delta
 
     # Don't know, which argument permutation is better
-    move_and_slide(_velocity, Vector2.UP, false, 4, PI/2)
+    # ! It is important for smooth physics to update our velocity
+    _velocity = move_and_slide(_velocity, Vector2.UP, false, 4, PI/2)
 
     var slide_count = get_slide_count()
     if slide_count > 0:
         # Touch-down! Yankees Three!
         _touch_down = true
-        
         # Slow the plane a bit
-        _velocity.x = lerp(_velocity.x, 0.001, 0.01)
-    
+        _velocity.x = lerp(_velocity.x, 0.0, SLOW_DOWN_ALPHA)
+
     # Cange pitch of the plane if only one of its wheels has touched down
     _touch_down(_front_wheel_ray, _rear_wheel_ray)
     _touch_down(_rear_wheel_ray, _front_wheel_ray)
-    
+
     # If we have touched down, we'd better be in a landing zone
     if _touch_down:
         if _in_landing_area:
             if _velocity.x <= STAND_STILL_VELOCITY:
                 _velocity.x = 0
                 _landed = true
-                
+
                 print("You win!")
-                
+
         else:
             # TODO Explode properly
             print("You lose!")
@@ -110,7 +112,7 @@ func _connect_to_landing_areas() -> void:
         if not o is Area2D:
             print("landing_areas contains non-Area2D node!")
             continue
-            
+
         var landing_area: Area2D = o as Area2D
         landing_area.connect("body_entered", self, "_landing_area_triggered", [true])
         landing_area.connect("body_exited", self, "_landing_area_triggered", [false])
