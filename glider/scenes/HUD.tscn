@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://themes/HUDTheme.tres" type="Theme" id=1]
+[ext_resource path="res://scenes/HUD.gd" type="Script" id=2]
+
+[node name="HUD" type="Node"]
+script = ExtResource( 2 )
+
+[node name="TimeLabel" type="Label" parent="."]
+margin_left = 17.0
+margin_top = 14.0
+margin_right = 196.0
+margin_bottom = 52.0
+theme = ExtResource( 1 )
+text = "00:00:00"
+__meta__ = {
+"_edit_use_anchors_": false
+}
