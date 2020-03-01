@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-class_name Plane2D
+class_name Aircraft
 
 ################################################################################
 # Constants

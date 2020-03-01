@@ -9,20 +9,20 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Aircraft",
+"language": "GDScript",
+"path": "res://scenes/Aircraft/Aircraft.gd"
+}, {
 "base": "Node",
 "class": "InputController",
 "language": "GDScript",
-"path": "res://scenes/Plane2D/InputController.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Plane2D",
-"language": "GDScript",
-"path": "res://scenes/Plane2D/Plane2D.gd"
+"path": "res://scenes/Aircraft/InputController.gd"
 }, {
 "base": "InputController",
 "class": "PlayerInputController",
 "language": "GDScript",
-"path": "res://scenes/Plane2D/PlayerInputController.gd"
+"path": "res://scenes/Aircraft/PlayerInputController.gd"
 }, {
 "base": "Node",
 "class": "Screenshot",
@@ -45,8 +45,8 @@ _global_script_classes=[ {
 "path": "res://lib/StateMachine.gd"
 } ]
 _global_script_class_icons={
+"Aircraft": "",
 "InputController": "",
-"Plane2D": "",
 "PlayerInputController": "",
 "Screenshot": "",
 "Slideshow": "",

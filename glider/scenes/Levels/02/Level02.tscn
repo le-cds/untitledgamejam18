@@ -2,7 +2,11 @@
 
 [ext_resource path="res://scenes/Levels/02/level02.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Houses/house-tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://scenes/Plane2D/Plane2D.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Aircraft/Aircraft.tscn" type="PackedScene" id=3]
+
+
+
+
 
 [sub_resource type="PhysicsMaterial" id=1]
 
