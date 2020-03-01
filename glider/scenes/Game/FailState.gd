@@ -1,18 +1,18 @@
 extends State
 
-# This state gets activated when the player lands successfully.
-class_name LandedState
+# This state gets activated when the player has failed for some reason.
+class_name FailState
 
 ####################################################################################
 # Constants
 
-const PARAMS_TIME := "time"
+const PARAMS_REASON := "reason"
 
 
 ####################################################################################
 # Scene Objects
 
-onready var _time_label: Label = $VBoxContainer/TimeLabel
+onready var _reason_label: Label = $VBoxContainer/FailReasonLabel
 
 
 ####################################################################################
@@ -21,8 +21,11 @@ onready var _time_label: Label = $VBoxContainer/TimeLabel
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
 
-    if params.has(PARAMS_TIME):
-        _time_label.text = Util.millis_to_string(params[PARAMS_TIME])
+    if params.has(PARAMS_REASON):
+        if params[PARAMS_REASON] == Aircraft.State.EXPLODED:
+            _reason_label.text = "Everyone's dead."
+        elif params[PARAMS_REASON] == Aircraft.State.LEFT:
+            _reason_label.text = "You bailed."
 
 
 ####################################################################################
@@ -31,8 +34,3 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 func _on_TryAgainButton_pressed() -> void:
     # TODO Implement
     print("Try Again")
-
-
-func _on_NextLevelButton_pressed() -> void:
-    # TODO Implement
-    print("Next Level")

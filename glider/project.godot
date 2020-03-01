@@ -14,6 +14,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scenes/Aircraft/Aircraft.gd"
 }, {
+"base": "State",
+"class": "FailState",
+"language": "GDScript",
+"path": "res://scenes/Game/FailState.gd"
+}, {
 "base": "Node",
 "class": "HUD",
 "language": "GDScript",
@@ -66,6 +71,7 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Aircraft": "",
+"FailState": "",
 "HUD": "",
 "InputController": "",
 "LandedState": "",

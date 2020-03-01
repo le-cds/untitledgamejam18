@@ -51,13 +51,15 @@ func _on_aircraft_stopped_flying(reason) -> void:
     # Stop the timer before we decide what we should actually do
     _hud.set_timer_running(false)
 
-    match reason:
-        Aircraft.State.LANDED:
-            var params = { LandedState.PARAMS_TIME: _hud.get_timer() }
-            transition_push(Constants.GAME_STATE_LANDED, params)
+    # Setup the correct end screen
+    var params = {}
+    var target: String
 
-        Aircraft.State.EXPLODED:
-            print("Exploded")
+    if reason == Aircraft.State.LANDED:
+        params[LandedState.PARAMS_TIME] = _hud.get_timer()
+        target = Constants.GAME_STATE_LANDED
+    else:
+        params[FailState.PARAMS_REASON] = reason
+        target = Constants.GAME_STATE_FAILED
 
-        Aircraft.State.LEFT:
-            print("Left")
+    transition_push(target, params)

@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scenes/Game/LandedState.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/Game/FailState.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Game/PlayingState.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Aircraft/Aircraft.tscn" type="PackedScene" id=5]
 [ext_resource path="res://lib/StateMachine.gd" type="Script" id=7]
@@ -75,3 +76,7 @@ state_id = "playing"
 [node name="LandedState" parent="StateMachine" instance=ExtResource( 1 )]
 visible = false
 state_id = "landed"
+
+[node name="FailState" parent="StateMachine" instance=ExtResource( 2 )]
+visible = false
+state_id = "failed"
