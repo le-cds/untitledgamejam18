@@ -69,7 +69,8 @@ func add_state(state: State) -> void:
             print("State " + state_id + " already exists!")
         else:
             _states[state_id] = state
-            self.add_child(state)
+            if not state.get_parent():
+                self.add_child(state)
 
 
 # Removes the state from the state machine. DOES NOT remove the state from the
