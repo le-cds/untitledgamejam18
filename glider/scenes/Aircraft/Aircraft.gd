@@ -61,7 +61,8 @@ var _touch_down := false
 ################################################################################
 # Effects
 
-var _explosion = preload("res://scenes/Effects/Explosion.tscn")
+var _explosion_effect = preload("res://scenes/Effects/Explosion.tscn")
+var _landed_effect = preload("res://scenes/Effects/Landed.tscn")
 
 
 ################################################################################
@@ -174,6 +175,9 @@ func start() -> void:
 
 func _live() -> void:
     _state = State.LANDED
+
+    _play_success_at_standstill_location()
+
     emit_signal("stopped_flying", _state)
 
 
@@ -219,7 +223,7 @@ func set_input_controller(controller: InputController) -> void:
 
 func _play_explosion_at_impact_location():
     # Spawn the new instance in parent (to keep from getting freed)
-    var instance = _explosion.instance()
+    var instance = _explosion_effect.instance()
     get_parent().add_child(instance)
 
     # Explosion only happens on collision, so we can use the current
@@ -231,3 +235,13 @@ func _play_explosion_at_impact_location():
         collision.position + Vector2(5,5)
     )
     instance.rotation = -collision.normal.angle_to(Vector2.UP)
+
+
+func _play_success_at_standstill_location():
+    # Spawn the new instance in parent (to keep from getting freed)
+    var instance = _landed_effect.instance()
+    get_parent().add_child(instance)
+
+    instance.set_global_position(
+        self.global_position
+    )
