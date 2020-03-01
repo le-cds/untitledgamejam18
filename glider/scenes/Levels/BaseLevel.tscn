@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scenes/Game/PlayingState.tscn" type="PackedScene" id=4]
+[ext_resource path="res://scenes/Aircraft/Aircraft.tscn" type="PackedScene" id=5]
+[ext_resource path="res://lib/StateMachine.gd" type="Script" id=7]
+[ext_resource path="res://scenes/Game/WaitingState.gd" type="Script" id=8]
+[ext_resource path="res://scenes/Aircraft/PlayerInputController.gd" type="Script" id=9]
+[ext_resource path="res://scenes/Levels/BaseLevel.gd" type="Script" id=10]
+
+[sub_resource type="PhysicsMaterial" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 233.744, 136.71 )
+
+[node name="Base" type="Node2D"]
+script = ExtResource( 10 )
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Colliders" type="Node2D" parent="."]
+
+[node name="FloorCollider" type="StaticBody2D" parent="Colliders"]
+physics_material_override = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Colliders/FloorCollider"]
+position = Vector2( 1.13208, -0.773781 )
+build_mode = 1
+polygon = PoolVector2Array( -1.54934, 300.894, 146.007, 299.436, 215.965, 301.957, 236.853, 304.822, 250.641, 308.676, 260.353, 311.39, 279.622, 318.861, 305.641, 328.949, 326.175, 338.703, 341.575, 347.43, 353.263, 355.339, 361.942, 362.508, 370.244, 373.452, 380.055, 384.395, 392.885, 394.961, 401.187, 400.999, 415.526, 407.791, 440.768, 416.318, 472.13, 425.149, 539.258, 440.091, 576.111, 444.994, 612.883, 449.678, 654.77, 453.829, 692.745, 456.437, 735.147, 457.602, 785.172, 458.198, 842.389, 459.078, 905.544, 458.734, 960.36, 457.885, 960.828, 541.074, 924.684, 510.981, 893.733, 529.552, 851.175, 504.017, 808.186, 502.13, 719.835, 493.804, 665.987, 496.429, 640.506, 492.571, 536.939, 477.123, 470.573, 466.84, 421.854, 459.639, 388.775, 453.023, 367.723, 451.267, 324.629, 444.741, 282.142, 438.308, 231.107, 412.98, 167.984, 381.653, 113.295, 354.512, 84.3529, 340.148 )
+
+[node name="LandingCollider" type="Area2D" parent="Colliders" groups=[
+"landing_areas",
+]]
+position = Vector2( -0.856995, -1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/LandingCollider"]
+position = Vector2( 728.659, 373.315 )
+shape = SubResource( 2 )
+
+[node name="Aircraft" parent="." instance=ExtResource( 5 )]
+position = Vector2( 78.6517, 156.989 )
+
+[node name="PlayerInputController" type="Node" parent="Aircraft"]
+script = ExtResource( 9 )
+
+[node name="Camera2D" type="Camera2D" parent="Aircraft"]
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 960
+limit_bottom = 540
+limit_smoothed = true
+smoothing_enabled = true
+editor_draw_limits = true
+editor_draw_drag_margin = true
+
+[node name="StateMachine" type="Node2D" parent="."]
+script = ExtResource( 7 )
+
+[node name="WaitingState" type="Node2D" parent="StateMachine"]
+script = ExtResource( 8 )
+state_id = "waiting"
+
+[node name="PlayingState" parent="StateMachine" instance=ExtResource( 4 )]
+state_id = "playing"
