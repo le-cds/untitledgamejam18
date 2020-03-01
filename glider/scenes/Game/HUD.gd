@@ -54,7 +54,7 @@ func get_timer() -> int:
 
 # Returns a displayable string representing the timer's current value.
 func get_timer_string() -> String:
-    var minutes := int(_time_millis / 60000)
-    var seconds := int(_time_millis / 1000)
-    var millis := int((_time_millis % 1000) / 10)
+    var minutes := _time_millis / 60000
+    var seconds := _time_millis / 1000
+    var millis := (_time_millis % 1000) / 10
     return TIME_FORMAT % [minutes, seconds, millis]
