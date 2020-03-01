@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/Levels/BaseLevel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/World/Sky.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Clouds/Clouds.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Levels/04/landscape.png" type="Texture" id=4]
+[ext_resource path="res://scenes/Houses/house-tileset.tres" type="TileSet" id=5]
+
+[node name="Level04" instance=ExtResource( 1 )]
+
+[node name="Sky" parent="Visuals" index="0" instance=ExtResource( 2 )]
+margin_left = 2.33276
+margin_right = 1904.33
+
+[node name="Clouds" parent="Visuals" index="1" instance=ExtResource( 3 )]
+margin_left = -114.901
+margin_top = -1.78159
+margin_right = 1097.1
+margin_bottom = 540.218
+
+[node name="Sprite" type="Sprite" parent="Visuals" index="2"]
+position = Vector2( 953.99, 270 )
+texture = ExtResource( 4 )
+
+[node name="TileMap" type="TileMap" parent="Visuals" index="3"]
+position = Vector2( 0, 1 )
+tile_set = ExtResource( 5 )
+cell_size = Vector2( 32, 32 )
+format = 1
+tile_data = PoolIntArray( 131112, 5, 0, 458753, 2, 0, 524292, 2, 0, 655367, 0, 0, 786443, 4, 0, 851984, 6, 0 )
+
+[node name="CollisionPolygon2D" parent="Colliders/FloorCollider" index="0"]
+polygon = PoolVector2Array( -0.250183, 232.664, 26.8506, 228.253, 50.1699, 231.404, 65.9261, 233.295, 96.1781, 238.337, 135.254, 252.832, 206.472, 289.387, 317.396, 353.042, 374.119, 382.664, 394.917, 394.008, 433.362, 411.655, 473.068, 425.521, 514.034, 434.975, 561.933, 443.168, 577.059, 444.429, 630, 444.429, 639.454, 442.538, 654.58, 437.496, 696.177, 419.849, 716.975, 407.874, 739.664, 380.143, 753.53, 358.714, 789.839, 272.187, 807.088, 265.553, 834.288, 313.983, 866.796, 367.056, 899.967, 402.218, 911.909, 422.12, 953.704, 452.638, 987.539, 475.194, 1030.33, 494.084, 1067.39, 502.862, 1113.23, 513.103, 1155.66, 519.443, 1201.02, 520.418, 1229.79, 521.393, 1312.93, 521.867, 1406.5, 512.789, 1414.88, 486.252, 1405.11, 472.984, 1377.87, 462.508, 1240.3, 433.178, 1237.59, 343.879, 1242.98, 301.844, 1247.05, 244.829, 1254.54, 182.302, 1270.05, 137.069, 1292.97, 99.2589, 1328.13, 74.395, 1376.14, 54.6753, 1437.01, 22.095, 1473.88, 0.660614, 1476.45, 540.808, 1403.28, 540.875, 1296.39, 540.973, 1194.51, 541.067, 1047.53, 541.202, 920.592, 541.318, 857.122, 541.376, 761.92, 541.464, 676.743, 541.542, 589.892, 541.622, 508.053, 541.697, 317.649, 541.872, 222.449, 541.959, 127.248, 540.619, -2.90246, 540.601 )
+
+[node name="LandingCollider" parent="Colliders" index="1"]
+position = Vector2( 382.873, 70.1475 )
+
+[node name="CollisionShape2D" parent="Colliders/LandingCollider" index="0"]
+position = Vector2( 738.68, 331.275 )
+
+[node name="Aircraft" parent="." index="2"]
+position = Vector2( 63.4891, 48.5182 )
+
+[node name="Camera2D" parent="Aircraft" index="7"]
+limit_right = 1900

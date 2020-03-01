@@ -8,7 +8,7 @@ class_name PlayerInputController
 # Constants
 
 # Absolute of the maximum gravity value attainable.
-const GRAVITY_MAX := 15.0
+const GRAVITY_MAX := 30.0
 # The time in seconds it takes for gravity to go from 0 to full when full
 # controller input is active.
 const GRAVITY_MAX_TIME := 0.3

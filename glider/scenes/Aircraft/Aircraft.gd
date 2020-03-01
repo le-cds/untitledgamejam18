@@ -20,7 +20,7 @@ const SCALE := 12.0
 # The maximum velocity where we consider the plane to be standing.
 const STAND_STILL_VELOCITY := 3.0
 # The maximum safe landing velocity for the softest of touch-downs.
-const SAFE_LANDING_VELOCITY := 300.0
+const SAFE_LANDING_VELOCITY := 500.0
 # Basically controls the rate of slowing down. Lower value means greater stopping distance
 const SLOW_DOWN_ALPHA := 0.025
 
