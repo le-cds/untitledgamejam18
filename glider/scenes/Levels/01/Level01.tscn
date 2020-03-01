@@ -5,19 +5,13 @@
 [ext_resource path="res://scenes/Plane2D/Plane2D.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/GameUI/HUD.tscn" type="PackedScene" id=4]
 
-
-
-
-
-
-
 [sub_resource type="PhysicsMaterial" id=1]
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 233.744, 136.71 )
 
 [node name="Level01" type="Sprite"]
-position = Vector2( 482.478, 267.448 )
+position = Vector2( 480, 270 )
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_lock_": true
