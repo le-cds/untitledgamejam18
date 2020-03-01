@@ -15,9 +15,19 @@ _global_script_classes=[ {
 "path": "res://scenes/Aircraft/Aircraft.gd"
 }, {
 "base": "Node",
+"class": "HUD",
+"language": "GDScript",
+"path": "res://scenes/Game/HUD.gd"
+}, {
+"base": "Node",
 "class": "InputController",
 "language": "GDScript",
 "path": "res://scenes/Aircraft/InputController.gd"
+}, {
+"base": "State",
+"class": "LandedState",
+"language": "GDScript",
+"path": "res://scenes/Game/LandedState.gd"
 }, {
 "base": "InputController",
 "class": "PlayerInputController",
@@ -56,7 +66,9 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Aircraft": "",
+"HUD": "",
 "InputController": "",
+"LandedState": "",
 "PlayerInputController": "",
 "PlayingState": "",
 "Screenshot": "",
@@ -76,6 +88,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Constants="*res://scripts/Constants.gd"
+Util="*res://scripts/Util.gd"
 
 [display]
 

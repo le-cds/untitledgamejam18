@@ -1,10 +1,6 @@
 extends Node
 
-################################################################################
-# Constants
-
-const TIME_FORMAT := "%02d:%02d:%02d"
-
+class_name HUD
 
 ################################################################################
 # Scene Objects
@@ -32,7 +28,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
     _time_millis += int(delta * 1000)
-    _time_label.text = get_timer_string()
+    _time_label.text = Util.millis_to_string(_time_millis)
 
 
 ################################################################################
@@ -43,18 +39,10 @@ func set_timer_running(running: bool) -> void:
         if running:
             _time_millis = 0
 
-        running = _timer_running
+        _timer_running = running
         set_physics_process(_timer_running)
 
 
 # Returns the timer's current value, in milliseconds.
 func get_timer() -> int:
     return _time_millis
-
-
-# Returns a displayable string representing the timer's current value.
-func get_timer_string() -> String:
-    var minutes := _time_millis / 60000
-    var seconds := _time_millis / 1000
-    var millis := (_time_millis % 1000) / 10
-    return TIME_FORMAT % [minutes, seconds, millis]

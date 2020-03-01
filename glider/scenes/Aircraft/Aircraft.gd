@@ -3,6 +3,12 @@ extends KinematicBody2D
 class_name Aircraft
 
 ################################################################################
+# Enumerations
+
+enum State { WAITING, FLYING, LANDED, EXPLODED, LEFT }
+
+
+################################################################################
 # Constants
 
 # Usual gravity excerted by Earth.
@@ -22,9 +28,9 @@ const SLOW_DOWN_ALPHA := 0.025
 ################################################################################
 # Signals
 
-# Emitted when the plane lands. The parameter indicates whether the landing was
-# in fact successful (true) or whether everyone dies (false).
-signal landed(successful)
+# Emitted whenever the plane stops flying. The cause for the stop is encoded in
+# the state variable, which has one of the values of the State enumeration.
+signal stopped_flying(reason)
 
 
 ################################################################################
@@ -41,8 +47,8 @@ onready var _front_wheel_ray = $FrontWheelRay
 # The input controller used to steer the plane.
 var input_controller: InputController setget set_input_controller
 
-# Whether the plane has started flying.
-var _running := false
+# State of the plane.
+var _state = State.WAITING
 # The plane's current velocity.
 var _velocity := Vector2()
 # Whether the plane is currently inside a landing area. Required for life-and-
@@ -50,8 +56,6 @@ var _velocity := Vector2()
 var _in_landing_area := false
 # Whether the plane has touched down.
 var _touch_down := false
-# Whether the plane has come to a full stop.
-var _landed_or_dead := false
 
 
 ################################################################################
@@ -80,7 +84,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-    if not _running or _landed_or_dead:
+    if _state != State.FLYING:
         return
 
     var _gravity = _compute_gravity(delta)
@@ -164,29 +168,22 @@ func _touch_down_both_wheels(touch_wheel: RayCast2D, flying_wheel: RayCast2D) ->
 # Plane Lifecycle
 
 func start() -> void:
-    print("Aircraft starting")
-    _running = true
+    _state = State.FLYING
     set_physics_process(true)
 
 
 func _live() -> void:
-    _landed_or_dead = true
-
-    # TODO Do something proper here
-    print("You win!")
-
-    emit_signal("landed", true)
+    _state = State.LANDED
+    emit_signal("stopped_flying", _state)
 
 
 func _die() -> void:
-    _landed_or_dead = true
+    _state = State.EXPLODED
 
     _play_explosion_at_impact_location()
-
-    print("DEATH!!!")
     queue_free()
 
-    emit_signal("landed", false)
+    emit_signal("stopped_flying", _state)
 
 
 ################################################################################
