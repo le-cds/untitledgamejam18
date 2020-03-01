@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/Levels/02/level02.png" type="Texture" id=5]
 
 [node name="Level02" instance=ExtResource( 4 )]
+state_id = "level02"
 
 [node name="Sky" parent="Visuals" index="0" instance=ExtResource( 2 )]
 

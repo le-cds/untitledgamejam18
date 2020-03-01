@@ -7,7 +7,7 @@
 [ext_resource path="res://lib/State.gd" type="Script" id=5]
 [ext_resource path="res://scenes/Aircraft/PlayerInputController.gd" type="Script" id=6]
 [ext_resource path="res://scenes/Clouds/Clouds.tscn" type="PackedScene" id=7]
-[ext_resource path="res://scenes/World/skybox.png" type="Texture" id=8]
+[ext_resource path="res://scenes/World/Sky.tscn" type="PackedScene" id=8]
 [ext_resource path="res://lib/StateMachine.gd" type="Script" id=9]
 [ext_resource path="res://scenes/Game/WaitingState.gd" type="Script" id=10]
 
@@ -18,6 +18,7 @@ extents = Vector2( 233.744, 136.71 )
 
 [node name="Level03" type="Node2D"]
 script = ExtResource( 5 )
+state_id = "level03"
 
 [node name="Visuals" type="Node2D" parent="."]
 __meta__ = {
@@ -25,18 +26,8 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Sky" type="Sprite" parent="Visuals"]
-position = Vector2( 480, 270 )
-texture = ExtResource( 8 )
-
-[node name="Sky2" type="Sprite" parent="Visuals"]
-position = Vector2( 1442, 270 )
-texture = ExtResource( 8 )
-flip_h = true
-
-[node name="Sky3" type="Sprite" parent="Visuals"]
-position = Vector2( 2400, 270 )
-texture = ExtResource( 8 )
+[node name="Sky" parent="Visuals" instance=ExtResource( 8 )]
+margin_right = 2879.0
 
 [node name="Clouds" parent="Visuals" instance=ExtResource( 7 )]
 margin_left = -130.0
