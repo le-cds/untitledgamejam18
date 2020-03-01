@@ -19,7 +19,7 @@ func _ready() -> void:
     _slideshow.start()
 
     # Start loading the main scene
-    _main_scene_loader = ResourceLoader.load_interactive("res://scenes/World2D.tscn")
+    _main_scene_loader = ResourceLoader.load_interactive("res://scenes/Game.tscn")
 
 
 func _process(delta: float) -> void:
@@ -43,5 +43,4 @@ func _on_Slideshow_slideshow_finished() -> void:
     _splash.queue_free()
 
     # This would be dangerous if loading our main menu took long
-    # TODO Start thingy here
-    #_main_parent.get_child(0).start()
+    _main_parent.get_child(0).start()
