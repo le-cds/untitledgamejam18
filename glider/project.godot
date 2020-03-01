@@ -39,7 +39,8 @@ _global_script_class_icons={
 [application]
 
 config/name="Glider"
-run/main_scene="res://scenes/World2D.tscn"
+run/main_scene="res://scenes/Root/Root.tscn"
+boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://icon.png"
 
 [autoload]
