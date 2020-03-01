@@ -57,7 +57,8 @@ var _landed_or_dead := false
 ################################################################################
 # Effects
 
-var _explosion = preload("res://scenes/Effects/Explosion.tscn")
+var _explosion_effect = preload("res://scenes/Effects/Explosion.tscn")
+var _landed_effect = preload("res://scenes/Effects/Landed.tscn")
 
 
 ################################################################################
@@ -172,7 +173,7 @@ func start() -> void:
 func _live() -> void:
     _landed_or_dead = true
 
-    # TODO Do something proper here
+    _play_success_at_standstill_location()
     print("You win!")
 
     emit_signal("landed", true)
@@ -222,7 +223,7 @@ func set_input_controller(controller: InputController) -> void:
 
 func _play_explosion_at_impact_location():
     # Spawn the new instance in parent (to keep from getting freed)
-    var instance = _explosion.instance()
+    var instance = _explosion_effect.instance()
     get_parent().add_child(instance)
 
     # Explosion only happens on collision, so we can use the current
@@ -234,3 +235,13 @@ func _play_explosion_at_impact_location():
         collision.position + Vector2(5,5)
     )
     instance.rotation = -collision.normal.angle_to(Vector2.UP)
+
+
+func _play_success_at_standstill_location():
+    # Spawn the new instance in parent (to keep from getting freed)
+    var instance = _landed_effect.instance()
+    get_parent().add_child(instance)
+
+    instance.set_global_position(
+        self.global_position
+    )
