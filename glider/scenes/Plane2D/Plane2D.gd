@@ -13,6 +13,8 @@ const GRAVITY_UP := -15.0
 const SCALE := 12.0
 # The maximum velocity where we consider the plane to be standing.
 const STAND_STILL_VELOCITY := 3.0
+# The maximum safe landing velocity for the softest of touch-downs.
+const SAFE_LANDING_VELOCITY := 300.0
 # Basically controls the rate of slowing down. Lower value means greater stopping distance
 const SLOW_DOWN_ALPHA := 0.025
 
@@ -35,7 +37,7 @@ var _in_landing_area := false
 # Whether the plane has touched down.
 var _touch_down := false
 # Whether the plane has come to a full stop.
-var _landed := false
+var _landed_or_dead := false
 
 
 ################################################################################
@@ -50,7 +52,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-    if _landed:
+    if _landed_or_dead:
         return
 
     var _gravity := GRAVITY_STANDARD * SCALE
@@ -65,43 +67,78 @@ func _physics_process(delta: float) -> void:
         rotation = _velocity.angle()
 
     # Have gravity modify our vertical speed
-    _velocity.y += _gravity * delta
+    var new_velocity := _velocity
+    new_velocity.y += _gravity * delta
 
-    # Don't know, which argument permutation is better
     # ! It is important for smooth physics to update our velocity
-    _velocity = move_and_slide(_velocity, Vector2.UP, false, 4, PI/2)
+    new_velocity = move_and_slide(new_velocity, Vector2.UP, false, 4, PI/2)
 
     var slide_count = get_slide_count()
     if slide_count > 0:
+        if not _touch_down:
+            # We're touching down for the first time. Ensure that we don't die
+            if not _is_proper_touch_down():
+                _die()
+                return
+
         # Touch-down! Yankees Three!
         _touch_down = true
         # Slow the plane a bit
-        _velocity.x = lerp(_velocity.x, 0.0, SLOW_DOWN_ALPHA)
+        new_velocity.x = lerp(new_velocity.x, 0.0, SLOW_DOWN_ALPHA)
 
     # Cange pitch of the plane if only one of its wheels has touched down
-    _touch_down(_front_wheel_ray, _rear_wheel_ray)
-    _touch_down(_rear_wheel_ray, _front_wheel_ray)
+    _touch_down_both_wheels(_front_wheel_ray, _rear_wheel_ray)
+    _touch_down_both_wheels(_rear_wheel_ray, _front_wheel_ray)
 
     # If we have touched down, we'd better be in a landing zone
-    if _touch_down:
-        if _in_landing_area:
-            if _velocity.x <= STAND_STILL_VELOCITY:
-                _velocity.x = 0
-                _landed = true
+    if _touch_down and _in_landing_area and new_velocity.x <= STAND_STILL_VELOCITY:
+        new_velocity.x = 0
+        _live()
 
-                print("You win!")
-
-        else:
-            # TODO Explode properly
-            print("You lose!")
-            queue_free()
+    _velocity = new_velocity
 
 
-func _touch_down(touch_wheel: RayCast2D, flying_wheel: RayCast2D) -> void:
+# Called when the plane touches down for the first time to check whether the touch down
+# is in the designated landing area and soft enough for the passengers to not die.
+func _is_proper_touch_down() -> bool:
+    if not _in_landing_area:
+        return false
+
+    assert(get_slide_count() > 0)
+
+    # Find how much of the maximum landing velocity is acceptable for safe touch-down.
+    # This depends on the touch down angle.
+    var collision: KinematicCollision2D = get_slide_collision(0)
+    var factor := abs(sin(_velocity.angle_to(collision.normal)))
+
+    return _velocity.length() <= SAFE_LANDING_VELOCITY * factor
+
+
+# If one wheel already touches the ground, this function will apply the rotation necessary
+# to have the other wheel touch the ground as well.
+func _touch_down_both_wheels(touch_wheel: RayCast2D, flying_wheel: RayCast2D) -> void:
     if touch_wheel.is_colliding() and not flying_wheel.is_colliding():
         var normal: Vector2 = touch_wheel.get_collision_normal()
         var angle: float = normal.angle_to(Vector2.UP)
         rotation = lerp(rotation, -angle, 0.1)
+
+
+################################################################################
+# Life and Death
+
+func _live() -> void:
+    _landed_or_dead = true
+
+    # TODO Do something proper here
+    print("You win!")
+
+
+func _die() -> void:
+    _landed_or_dead = true
+
+    # TODO Explode properly
+    print("DEATH!!!")
+    queue_free()
 
 
 ################################################################################
@@ -120,5 +157,4 @@ func _connect_to_landing_areas() -> void:
 
 func _landing_area_triggered(body: PhysicsBody2D, entered: bool) -> void:
     if body == self:
-        print("_landing_area_triggered" + str(entered))
         _in_landing_area = entered
