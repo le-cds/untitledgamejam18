@@ -7,8 +7,11 @@ extends KinematicBody2D
 const SPEED := 15.0
 # Usual gravity excerted by Earth.
 const GRAVITY_STANDARD := 9.81
-# Repelling, anti-gravity excerted when the player presses a button.
-const GRAVITY_UP := -15.0
+# Absolute of the maximum gravity value attainable.
+const GRAVITY_MAX := 15.0
+# The time in seconds it takes for gravity to go from 0 to full when full
+# controller input is active.
+const GRAVITY_MAX_TIME := 0.3
 # Scale factor by which the other values are scaled for the game to be fun...
 const SCALE := 12.0
 # The maximum velocity where we consider the plane to be standing.
@@ -108,11 +111,16 @@ func _physics_process(delta: float) -> void:
 
 # Updates the currently active gravity depending on player inputs.
 func _update_gravity(delta: float) -> void:
-    _gravity = GRAVITY_STANDARD * SCALE
+    if _touch_down:
+        _gravity = GRAVITY_STANDARD * SCALE
 
-    if not _touch_down:
-        if Input.is_action_pressed("game_gravity_switch"):
-            _gravity = GRAVITY_UP * SCALE
+    else:
+        var gravity_input := Input.get_action_strength("game_gravity_down")
+        gravity_input -= Input.get_action_strength("game_gravity_up")
+
+        var max_gravity := GRAVITY_MAX * SCALE
+        _gravity += gravity_input / GRAVITY_MAX_TIME * delta * max_gravity
+        _gravity = clamp(_gravity, -max_gravity, max_gravity)
 
 
 # Called when the plane touches down for the first time to check whether the touch down
