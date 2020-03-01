@@ -1,17 +1,14 @@
 extends KinematicBody2D
 
+class_name Plane2D
+
 ################################################################################
 # Constants
 
-# Horizontal air speed.
-const SPEED := 15.0
 # Usual gravity excerted by Earth.
 const GRAVITY_STANDARD := 9.81
-# Absolute of the maximum gravity value attainable.
-const GRAVITY_MAX := 15.0
-# The time in seconds it takes for gravity to go from 0 to full when full
-# controller input is active.
-const GRAVITY_MAX_TIME := 0.3
+# Horizontal air speed.
+const SPEED := 15.0
 # Scale factor by which the other values are scaled for the game to be fun...
 const SCALE := 12.0
 # The maximum velocity where we consider the plane to be standing.
@@ -41,9 +38,11 @@ onready var _front_wheel_ray = $FrontWheelRay
 ################################################################################
 # State
 
+# The input controller used to steer the plane.
+var input_controller: InputController setget set_input_controller
+
+# Whether the plane has started flying.
 var _running := false
-# Currently active gravity acting on the plane.
-var _gravity: float
 # The plane's current velocity.
 var _velocity := Vector2()
 # Whether the plane is currently inside a landing area. Required for life-and-
@@ -63,18 +62,25 @@ func _ready() -> void:
     _velocity.x = SPEED * SCALE
     _velocity.y = 0
 
+    # If an input controller is part of the scene, find and install it
+    for child in self.get_children():
+        if child is InputController:
+            input_controller = child
+
     _connect_to_landing_areas()
 
 
 func _physics_process(delta: float) -> void:
-    if not _running and not Input.is_action_just_pressed("ui_accept"):
-        return
-    _running = true
+    if not _running:
+        if input_controller and input_controller.start_plane():
+            _running = true
+        else:
+            return
 
     if _landed_or_dead:
         return
 
-    _update_gravity(delta)
+    var _gravity = _compute_gravity(delta)
 
     # We'll only repell and rotate the plane if we're still in the air. Once we
     # have landed, we do things a little differently to keep the aircraft from
@@ -115,17 +121,11 @@ func _physics_process(delta: float) -> void:
 
 
 # Updates the currently active gravity depending on player inputs.
-func _update_gravity(delta: float) -> void:
+func _compute_gravity(delta: float) -> float:
     if _touch_down:
-        _gravity = GRAVITY_STANDARD * SCALE
-
+        return GRAVITY_STANDARD * SCALE
     else:
-        var gravity_input := Input.get_action_strength("game_gravity_down")
-        gravity_input -= Input.get_action_strength("game_gravity_up")
-
-        var max_gravity := GRAVITY_MAX * SCALE
-        _gravity += gravity_input / GRAVITY_MAX_TIME * delta * max_gravity
-        _gravity = clamp(_gravity, -max_gravity, max_gravity)
+        return input_controller.compute_gravity(delta) * SCALE
 
 
 # Called when the plane touches down for the first time to check whether the touch down
@@ -196,3 +196,12 @@ func _connect_to_landing_areas() -> void:
 func _landing_area_triggered(body: PhysicsBody2D, entered: bool) -> void:
     if body == self:
         _in_landing_area = entered
+
+
+################################################################################
+# Accessors
+
+# Sets the input controller and adds it to the plane as a child.
+func set_input_controller(controller: InputController) -> void:
+    input_controller = controller
+    self.add_child(input_controller)
