@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/World/house-sheet.png" type="Texture" id=1]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 46, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite/StaticBody2D"]
+polygon = PoolVector2Array( -43, -8, -30, -20, 13, -20, 25, -6, 21, 15, -38, 15 )
+
+[node name="Sprite7" type="Sprite" parent="."]
+position = Vector2( 138, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 1
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite7"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite7/StaticBody2D"]
+polygon = PoolVector2Array( -43, -8, -30, -20, 13, -20, 25, -6, 21, 15, -38, 15 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 230, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 2
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Sprite3"]
+position = Vector2( -184, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite3/StaticBody2D3"]
+position = Vector2( 184, 0 )
+polygon = PoolVector2Array( -43, -8, -30, -20, 13, -20, 25, -6, 21, 15, -38, 15 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+position = Vector2( 322, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 3
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Sprite4"]
+position = Vector2( -276, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite4/StaticBody2D4"]
+position = Vector2( 281, 0 )
+polygon = PoolVector2Array( -35, -7, -22, -20, 4, -20, 15, -7, 12, 15, -30, 15 )
+
+[node name="Sprite5" type="Sprite" parent="."]
+position = Vector2( 414, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 4
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Sprite5"]
+position = Vector2( -368, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite5/StaticBody2D5"]
+position = Vector2( 374, 0 )
+polygon = PoolVector2Array( -35, -7, -22, -20, 3, -20, 16, -7, 12, 15, -31, 15 )
+
+[node name="Sprite6" type="Sprite" parent="."]
+position = Vector2( 506, 26 )
+texture = ExtResource( 1 )
+hframes = 6
+frame = 5
+
+[node name="StaticBody2D5" type="StaticBody2D" parent="Sprite6"]
+position = Vector2( -460, 0 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Sprite6/StaticBody2D5"]
+position = Vector2( 467, 0 )
+polygon = PoolVector2Array( -35, -7, -22, -20, 4, -20, 15, -7, 12, 15, -30, 15 )
