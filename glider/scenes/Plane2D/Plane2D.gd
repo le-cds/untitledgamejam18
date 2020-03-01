@@ -20,6 +20,14 @@ const SLOW_DOWN_ALPHA := 0.025
 
 
 ################################################################################
+# Signals
+
+# Emitted when the plane lands. The parameter indicates whether the landing was
+# in fact successful (true) or whether everyone dies (false).
+signal landed(successful)
+
+
+################################################################################
 # Scene Objects
 
 onready var _plane_body = $PlaneBody
@@ -30,6 +38,8 @@ onready var _front_wheel_ray = $FrontWheelRay
 ################################################################################
 # State
 
+# Currently active gravity acting on the plane.
+var _gravity: float
 # The plane's current velocity.
 var _velocity := Vector2()
 # Whether the plane is currently inside a landing area. Required for life-and-
@@ -56,15 +66,12 @@ func _physics_process(delta: float) -> void:
     if _landed_or_dead:
         return
 
-    var _gravity := GRAVITY_STANDARD * SCALE
+    _update_gravity(delta)
 
     # We'll only repell and rotate the plane if we're still in the air. Once we
     # have landed, we do things a little differently to keep the aircraft from
     # taking off again
     if not _touch_down:
-        if Input.is_action_pressed("game_gravity_switch"):
-            _gravity = GRAVITY_UP * SCALE
-
         rotation = _velocity.angle()
 
     # Have gravity modify our vertical speed
@@ -97,6 +104,15 @@ func _physics_process(delta: float) -> void:
         _live()
 
     _velocity = new_velocity
+
+
+# Updates the currently active gravity depending on player inputs.
+func _update_gravity(delta: float) -> void:
+    _gravity = GRAVITY_STANDARD * SCALE
+
+    if not _touch_down:
+        if Input.is_action_pressed("game_gravity_switch"):
+            _gravity = GRAVITY_UP * SCALE
 
 
 # Called when the plane touches down for the first time to check whether the touch down
@@ -137,6 +153,8 @@ func _live() -> void:
     # TODO Do something proper here
     print("You win!")
 
+    emit_signal("landed", true)
+
 
 func _die() -> void:
     _landed_or_dead = true
@@ -144,6 +162,8 @@ func _die() -> void:
     # TODO Explode properly
     print("DEATH!!!")
     queue_free()
+
+    emit_signal("landed", false)
 
 
 ################################################################################
