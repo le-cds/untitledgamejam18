@@ -54,7 +54,7 @@ skippable = true
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Splash"]
 anims/FadeSplash = SubResource( 1 )
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer" parent="."]
+[node name="MenuMusic" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 volume_db = -6.0
 autoplay = true

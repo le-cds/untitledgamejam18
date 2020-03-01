@@ -55,6 +55,10 @@ var _landed_or_dead := false
 
 
 ################################################################################
+# Effects
+var _explosion = preload("res://scenes/Effects/Explosion.tscn")
+
+################################################################################
 # Scene Lifecycle
 
 func _ready() -> void:
@@ -172,7 +176,8 @@ func _live() -> void:
 func _die() -> void:
     _landed_or_dead = true
 
-    # TODO Explode properly
+    _play_explosion_at_impact_location()
+
     print("DEATH!!!")
     queue_free()
 
@@ -205,3 +210,20 @@ func _landing_area_triggered(body: PhysicsBody2D, entered: bool) -> void:
 func set_input_controller(controller: InputController) -> void:
     input_controller = controller
     self.add_child(input_controller)
+
+################################################################################
+# Effects
+func _play_explosion_at_impact_location():
+    # Spawn the new instance in parent (to keep from getting freed)
+    var instance = _explosion.instance()
+    get_parent().add_child(instance)
+
+    # Explosion only happens on collision, so we can use the current
+    # collision to determine the impact angle and place and rotate the
+    # explosion properly.
+    var collision: KinematicCollision2D = get_slide_collision(0)
+
+    instance.set_global_position(
+        collision.position + Vector2(5,5)
+    )
+    instance.rotation = -collision.normal.angle_to(Vector2.UP)
