@@ -41,6 +41,7 @@ onready var _front_wheel_ray = $FrontWheelRay
 ################################################################################
 # State
 
+var _running := false
 # Currently active gravity acting on the plane.
 var _gravity: float
 # The plane's current velocity.
@@ -66,6 +67,10 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+    if not _running and not Input.is_action_just_pressed("ui_accept"):
+        return
+    _running = true
+
     if _landed_or_dead:
         return
 
