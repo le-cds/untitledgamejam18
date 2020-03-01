@@ -4,6 +4,12 @@ extends State
 class_name FailState
 
 ####################################################################################
+# Signals
+
+# Emitted when the player clicks the Try Again button.
+signal try_again()
+
+####################################################################################
 # Constants
 
 const PARAMS_REASON := "reason"
@@ -32,5 +38,4 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 # Event Handling
 
 func _on_TryAgainButton_pressed() -> void:
-    # TODO Implement
-    print("Try Again")
+    emit_signal("try_again")

@@ -4,6 +4,15 @@ extends State
 class_name LandedState
 
 ####################################################################################
+# Signals
+
+# Emitted when the player clicks the Try Again button.
+signal try_again()
+# Emitted when the player clicks the Next Level button.
+signal next_level()
+
+
+####################################################################################
 # Constants
 
 const PARAMS_TIME := "time"
@@ -29,10 +38,8 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 # Event Handling
 
 func _on_TryAgainButton_pressed() -> void:
-    # TODO Implement
-    print("Try Again")
+    emit_signal("try_again")
 
 
 func _on_NextLevelButton_pressed() -> void:
-    # TODO Implement
-    print("Next Level")
+    emit_signal("next_level")

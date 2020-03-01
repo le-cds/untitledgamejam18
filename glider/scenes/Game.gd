@@ -10,7 +10,12 @@ onready var _state_machine: StateMachine = $StateMachine
 ####################################################################################
 # Lifecycle
 
+func _ready() -> void:
+    # Make sure that when this scene is started from the editor, start() is called
+    if self.get_parent() == get_tree().root:
+        start()
+
+
 func start() -> void:
-    # As of now, simply load and start the first level. Later on, this should be
-    # replaced by a proper menu thing.
-    _state_machine.transition_push("level01")
+    # For now, simply start up the level loader which loads the first level
+    _state_machine.transition_push(Constants.MENU_STATE_LOAD_LEVEL)

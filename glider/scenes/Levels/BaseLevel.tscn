@@ -80,3 +80,6 @@ state_id = "landed"
 [node name="FailState" parent="StateMachine" instance=ExtResource( 2 )]
 visible = false
 state_id = "failed"
+[connection signal="next_level" from="StateMachine/LandedState" to="." method="_on_next_level"]
+[connection signal="try_again" from="StateMachine/LandedState" to="." method="_on_try_again"]
+[connection signal="try_again" from="StateMachine/FailState" to="." method="_on_try_again"]
