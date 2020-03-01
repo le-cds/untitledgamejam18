@@ -24,10 +24,6 @@ var _gravity := 0.0
 ################################################################################
 # Functions
 
-func start_plane() -> bool:
-    return Input.is_action_just_pressed("game_start")
-
-
 func compute_gravity(delta: float) -> float:
     var gravity_input := Input.get_action_strength("game_gravity_down")
     gravity_input -= Input.get_action_strength("game_gravity_up")

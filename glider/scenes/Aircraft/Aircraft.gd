@@ -56,7 +56,9 @@ var _landed_or_dead := false
 
 ################################################################################
 # Effects
+
 var _explosion = preload("res://scenes/Effects/Explosion.tscn")
+
 
 ################################################################################
 # Scene Lifecycle
@@ -73,15 +75,12 @@ func _ready() -> void:
 
     _connect_to_landing_areas()
 
+    # Don't process physics until the plane is started
+    set_physics_process(false)
+
 
 func _physics_process(delta: float) -> void:
-    if not _running:
-        if input_controller and input_controller.start_plane():
-            _running = true
-        else:
-            return
-
-    if _landed_or_dead:
+    if not _running or _landed_or_dead:
         return
 
     var _gravity = _compute_gravity(delta)
@@ -162,7 +161,13 @@ func _touch_down_both_wheels(touch_wheel: RayCast2D, flying_wheel: RayCast2D) ->
 
 
 ################################################################################
-# Life and Death
+# Plane Lifecycle
+
+func start() -> void:
+    print("Aircraft starting")
+    _running = true
+    set_physics_process(true)
+
 
 func _live() -> void:
     _landed_or_dead = true
@@ -211,8 +216,10 @@ func set_input_controller(controller: InputController) -> void:
     input_controller = controller
     self.add_child(input_controller)
 
+
 ################################################################################
 # Effects
+
 func _play_explosion_at_impact_location():
     # Spawn the new instance in parent (to keep from getting freed)
     var instance = _explosion.instance()
