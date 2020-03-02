@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/splash_game.png-566cd15be1e2b2ce2cadd1ff5151a8e4.stex"
+path="res://.import/splash_godot.png-9bba311ecad820025632d718d5ac3f90.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/Root/splash_game.png"
-dest_files=[ "res://.import/splash_game.png-566cd15be1e2b2ce2cadd1ff5151a8e4.stex" ]
+source_file="res://scenes/Root/splash_godot.png"
+dest_files=[ "res://.import/splash_godot.png-9bba311ecad820025632d718d5ac3f90.stex" ]
 
 [params]
 

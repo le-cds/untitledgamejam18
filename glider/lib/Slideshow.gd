@@ -24,6 +24,9 @@ signal slideshow_finished()
 # The textures to show in the slideshow.
 export (Array, Texture) var textures: Array
 
+# How long to wait before displaying the first image after the start() method is called.
+export var pre_time := 0.0
+
 # How long to display each texture.
 export var display_time := 2.0
 
@@ -71,6 +74,10 @@ func _init() -> void:
     self.add_child(_tween)
 
 
+func _ready() -> void:
+    self.modulate = COLOR_TRANSPARENT
+
+
 func _input(event) -> void:
     if skippable:
         # Detect whether the user wants to skip the current slide.
@@ -91,8 +98,15 @@ func _input(event) -> void:
 ####################################################################################
 # Slideshow
 
-# Starts the slideshow, unless it is already running.
-func start() -> void:
+# Starts the slideshow, unless it is already running. Arguments > 0 override the
+# pre time setting and thus wait before showing the first image.
+func start(after: float = -1) -> void:
+    if after > 0:
+        pre_time = after
+
+    if pre_time > 0:
+        yield(get_tree().create_timer(pre_time), "timeout")
+
     if not _running:
         _curr_texture_index = NO_TEXTURE
         _running = true
