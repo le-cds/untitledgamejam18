@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://scenes/Root/splash_godot.png" type="Texture" id=1]
 [ext_resource path="res://scenes/Root/splash_studio.png" type="Texture" id=2]
 [ext_resource path="res://scenes/Root/Root.gd" type="Script" id=3]
 [ext_resource path="res://lib/Slideshow.gd" type="Script" id=4]
 [ext_resource path="res://scenes/Menu/music.ogg" type="AudioStream" id=5]
+[ext_resource path="res://scenes/Root/splash_authors.png" type="Texture" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "FadeSplash"
@@ -37,6 +38,7 @@ __meta__ = {
 }
 
 [node name="Slideshow" type="TextureRect" parent="Splash"]
+modulate = Color( 1, 1, 1, 0 )
 margin_left = -0.950012
 margin_right = 959.05
 margin_bottom = 540.0
@@ -44,7 +46,7 @@ script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-textures = [ ExtResource( 2 ), ExtResource( 1 ) ]
+textures = [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 6 ) ]
 pre_time = 0.5
 fade_time = 0.4
 
