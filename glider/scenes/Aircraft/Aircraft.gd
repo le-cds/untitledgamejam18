@@ -55,7 +55,7 @@ var _velocity := Vector2()
 # death types of decisions.
 var _in_landing_area := false
 # Whether the plane has touched down.
-var _touch_down := false
+var _on_ground := false
 
 
 ################################################################################
@@ -93,7 +93,7 @@ func _physics_process(delta: float) -> void:
     # We'll only repell and rotate the plane if we're still in the air. Once we
     # have landed, we do things a little differently to keep the aircraft from
     # taking off again
-    if not _touch_down:
+    if not _on_ground:
         rotation = _velocity.angle()
 
     # Have gravity modify our vertical speed
@@ -102,18 +102,18 @@ func _physics_process(delta: float) -> void:
 
     # ! It is important for smooth physics to update our velocity
     new_velocity = move_and_slide(new_velocity, Vector2.UP, false, 4, PI/2)
-
-    var slide_count = get_slide_count()
-    if slide_count > 0:
-        if not _touch_down:
-            # We're touching down for the first time. Ensure that we don't die
-            if not _is_proper_touch_down():
-                _die()
-                return
-
-        # Touch-down! Yankees Three!
-        _touch_down = true
-        # Slow the plane a bit
+    
+    # Check if we're touching down
+    if not _on_ground and get_slide_count() > 0:
+        if _is_proper_touch_down():
+            # Touch-down! Yankees Three!
+            _on_ground = true
+        else:
+            _die()
+            return
+    
+    # If we're on the ground, we need to slow down
+    if _on_ground:
         new_velocity.x = lerp(new_velocity.x, 0.0, SLOW_DOWN_ALPHA)
 
     # Cange pitch of the plane if only one of its wheels has touched down
@@ -121,7 +121,7 @@ func _physics_process(delta: float) -> void:
     _touch_down_both_wheels(_rear_wheel_ray, _front_wheel_ray)
 
     # If we have touched down, we'd better be in a landing zone
-    if _touch_down and _in_landing_area and new_velocity.x <= STAND_STILL_VELOCITY:
+    if _on_ground and _in_landing_area and new_velocity.x <= STAND_STILL_VELOCITY:
         new_velocity.x = 0
         _live()
 
@@ -130,27 +130,38 @@ func _physics_process(delta: float) -> void:
 
 # Updates the currently active gravity depending on player inputs.
 func _compute_gravity(delta: float) -> float:
-    if _touch_down:
+    if _on_ground:
         return GRAVITY_STANDARD * SCALE
     else:
         return input_controller.compute_gravity(delta) * SCALE
 
 
+# Checks whether there is a collision involving something other than the aircraft's
+# wheels. That will usually cause us to die a horrible, painful death.
+func _has_main_body_hit_stuff() -> bool:
+    for i in get_slide_count():
+        var collision: KinematicCollision2D = get_slide_collision(i)
+        
+        if collision.local_shape == _plane_body:
+            return true
+    
+    return false
+    
+
 # Called when the plane touches down for the first time to check whether the touch down
 # is in the designated landing area and soft enough for the passengers to not die.
 func _is_proper_touch_down() -> bool:
+    assert(get_slide_count() > 0)
+    
     if not _in_landing_area:
         return false
-
-    assert(get_slide_count() > 0)
-    var collision: KinematicCollision2D = get_slide_collision(0)
-
-    # Check if we touched down wheels-first
-    if collision.local_shape == _plane_body:
+    
+    if _has_main_body_hit_stuff():
         return false
-
+    
     # Find how much of the maximum landing velocity is acceptable for safe touch-down.
     # This depends on the touch down angle.
+    var collision: KinematicCollision2D = get_slide_collision(0)
     var factor := abs(sin(_velocity.angle_to(collision.normal)))
 
     return _velocity.length() <= SAFE_LANDING_VELOCITY * factor
