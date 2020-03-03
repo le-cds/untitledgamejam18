@@ -4,6 +4,7 @@ extends Node
 const LEVELS = 4
 
 # Node groups
+const GROUP_LEVEL_AREA = "level_areas"
 const GROUP_LANDING_AREAS = "landing_areas"
 
 # Menu state IDs

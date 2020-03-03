@@ -77,8 +77,9 @@ func _ready() -> void:
     for child in self.get_children():
         if child is InputController:
             input_controller = child
-
-    _connect_to_landing_areas()
+    
+    _connect_to_areas(Constants.GROUP_LEVEL_AREA)
+    _connect_to_areas(Constants.GROUP_LANDING_AREAS)
 
     # Don't process physics until the plane is started
     set_physics_process(false)
@@ -179,11 +180,13 @@ func _touch_down_both_wheels(touch_wheel: RayCast2D, flying_wheel: RayCast2D) ->
 ################################################################################
 # Plane Lifecycle
 
+# Starts the airplane.
 func start() -> void:
     _state = State.FLYING
     set_physics_process(true)
 
 
+# Called when the airplane came to a safe halt.
 func _live() -> void:
     _state = State.LANDED
 
@@ -192,6 +195,7 @@ func _live() -> void:
     emit_signal("stopped_flying", _state)
 
 
+# Called when the airplaine explodes.
 func _die() -> void:
     _state = State.EXPLODED
 
@@ -201,23 +205,36 @@ func _die() -> void:
     emit_signal("stopped_flying", _state)
 
 
+# Called when the airplane has left the level.
+func _leave() -> void:
+    _state = State.LEFT
+    
+    queue_free()
+    
+    emit_signal("stopped_flying", _state)
+
+
 ################################################################################
 # Landing Areas
 
-func _connect_to_landing_areas() -> void:
-    for o in get_tree().get_nodes_in_group(Constants.GROUP_LANDING_AREAS):
+func _connect_to_areas(group: String) -> void:
+    for o in get_tree().get_nodes_in_group(group):
         if not o is Area2D:
-            print("landing_areas contains non-Area2D node!")
+            print(group + " contains non-Area2D node!")
             continue
 
         var landing_area: Area2D = o as Area2D
-        landing_area.connect("body_entered", self, "_landing_area_triggered", [true])
-        landing_area.connect("body_exited", self, "_landing_area_triggered", [false])
+        landing_area.connect("body_entered", self, "_area_triggered", [group, true])
+        landing_area.connect("body_exited", self, "_area_triggered", [group, false])
 
 
-func _landing_area_triggered(body: PhysicsBody2D, entered: bool) -> void:
+func _area_triggered(body: PhysicsBody2D, group: String, entered: bool) -> void:
     if body == self:
-        _in_landing_area = entered
+        # What we do depends on which kind of an area we have
+        if group == Constants.GROUP_LANDING_AREAS:
+            _in_landing_area = entered
+        elif group == Constants.GROUP_LEVEL_AREA and entered == false:
+            _leave()
 
 
 ################################################################################
