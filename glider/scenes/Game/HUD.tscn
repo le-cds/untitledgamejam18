@@ -16,3 +16,14 @@ text = "00:00:00"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GForceLabel" type="Label" parent="."]
+margin_left = 17.0
+margin_top = 49.0
+margin_right = 196.0
+margin_bottom = 52.0
+theme = ExtResource( 1 )
+text = "G"
+__meta__ = {
+"_edit_use_anchors_": false
+}

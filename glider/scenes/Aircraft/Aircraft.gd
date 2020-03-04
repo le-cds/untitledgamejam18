@@ -51,6 +51,8 @@ var input_controller: InputController setget set_input_controller
 var _state = State.WAITING
 # The plane's current velocity.
 var _velocity := Vector2()
+# The current gravity (unscaled)
+var _gravity := 0.0
 # Whether the plane is currently inside a landing area. Required for life-and-
 # death types of decisions.
 var _in_landing_area := false
@@ -77,7 +79,7 @@ func _ready() -> void:
     for child in self.get_children():
         if child is InputController:
             input_controller = child
-    
+
     _connect_to_areas(Constants.GROUP_LEVEL_AREA)
     _connect_to_areas(Constants.GROUP_LANDING_AREAS)
 
@@ -89,7 +91,7 @@ func _physics_process(delta: float) -> void:
     if _state != State.FLYING:
         return
 
-    var _gravity = _compute_gravity(delta)
+    var _gravity_scaled = _compute_scaled_gravity(delta)
 
     # We'll only repell and rotate the plane if we're still in the air. Once we
     # have landed, we do things a little differently to keep the aircraft from
@@ -99,11 +101,11 @@ func _physics_process(delta: float) -> void:
 
     # Have gravity modify our vertical speed
     var new_velocity := _velocity
-    new_velocity.y += _gravity * delta
+    new_velocity.y += _gravity_scaled * delta
 
     # ! It is important for smooth physics to update our velocity
     new_velocity = move_and_slide(new_velocity, Vector2.UP, false, 4, PI/2)
-    
+
     # Check if we're touching down
     if not _on_ground and get_slide_count() > 0:
         if _is_proper_touch_down():
@@ -112,7 +114,7 @@ func _physics_process(delta: float) -> void:
         else:
             _die()
             return
-    
+
     # If we're on the ground, we need to slow down
     if _on_ground:
         new_velocity.x = lerp(new_velocity.x, 0.0, SLOW_DOWN_ALPHA)
@@ -130,11 +132,13 @@ func _physics_process(delta: float) -> void:
 
 
 # Updates the currently active gravity depending on player inputs.
-func _compute_gravity(delta: float) -> float:
+func _compute_scaled_gravity(delta: float) -> float:
     if _on_ground:
-        return GRAVITY_STANDARD * SCALE
+        _gravity = GRAVITY_STANDARD
     else:
-        return input_controller.compute_gravity(delta) * SCALE
+        _gravity = input_controller.compute_gravity(delta)
+
+    return _gravity * SCALE
 
 
 # Checks whether there is a collision involving something other than the aircraft's
@@ -142,24 +146,24 @@ func _compute_gravity(delta: float) -> float:
 func _has_main_body_hit_stuff() -> bool:
     for i in get_slide_count():
         var collision: KinematicCollision2D = get_slide_collision(i)
-        
+
         if collision.local_shape == _plane_body:
             return true
-    
+
     return false
-    
+
 
 # Called when the plane touches down for the first time to check whether the touch down
 # is in the designated landing area and soft enough for the passengers to not die.
 func _is_proper_touch_down() -> bool:
     assert(get_slide_count() > 0)
-    
+
     if not _in_landing_area:
         return false
-    
+
     if _has_main_body_hit_stuff():
         return false
-    
+
     # Find how much of the maximum landing velocity is acceptable for safe touch-down.
     # This depends on the touch down angle.
     var collision: KinematicCollision2D = get_slide_collision(0)
@@ -208,9 +212,9 @@ func _die() -> void:
 # Called when the airplane has left the level.
 func _leave() -> void:
     _state = State.LEFT
-    
+
     queue_free()
-    
+
     emit_signal("stopped_flying", _state)
 
 
@@ -244,6 +248,9 @@ func _area_triggered(body: PhysicsBody2D, group: String, entered: bool) -> void:
 func set_input_controller(controller: InputController) -> void:
     input_controller = controller
     self.add_child(input_controller)
+
+func get_gravity() -> float:
+    return _gravity
 
 
 ################################################################################

@@ -6,6 +6,7 @@ class_name HUD
 # Scene Objects
 
 onready var _time_label: Label = $TimeLabel
+onready var _gforce_label: Label = $GForceLabel
 
 
 ################################################################################
@@ -46,3 +47,7 @@ func set_timer_running(running: bool) -> void:
 # Returns the timer's current value, in milliseconds.
 func get_timer() -> int:
     return _time_millis
+
+
+func set_gravity(value: float) -> void:
+    _gforce_label.text = str(stepify(value/9.81, 0.1)) + "G"
