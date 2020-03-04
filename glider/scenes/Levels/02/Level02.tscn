@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scenes/Houses/house-tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/World/Sky.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scenes/Clouds/Clouds.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scenes/Levels/BaseLevel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/Levels/02/level02.png" type="Texture" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 480, 270 )
 
 [node name="Level02" instance=ExtResource( 4 )]
 state_id = "level02"
@@ -33,3 +36,7 @@ polygon = PoolVector2Array( -1.07852, 393.828, 6.28992, 400.144, 42.0795, 405.40
 
 [node name="LandingCollider" parent="Colliders" index="1"]
 position = Vector2( -1.90961, -133.632 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/LevelCollider" index="0"]
+position = Vector2( 480, 270 )
+shape = SubResource( 1 )
