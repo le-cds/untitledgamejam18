@@ -19,6 +19,7 @@ const PARAMS_REASON := "reason"
 # Scene Objects
 
 onready var _reason_label: Label = $VBoxContainer/FailReasonLabel
+onready var _focus_button: Button = $VBoxContainer/HBoxContainer/TryAgainButton
 
 
 ####################################################################################
@@ -32,6 +33,8 @@ func state_started(prev_state: State, params: Dictionary) -> void:
             _reason_label.text = "Everyone's dead."
         elif params[PARAMS_REASON] == Aircraft.State.LEFT:
             _reason_label.text = "You bailed."
+
+    _focus_button.grab_focus()
 
 
 ####################################################################################

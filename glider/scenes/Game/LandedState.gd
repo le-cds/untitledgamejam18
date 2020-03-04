@@ -22,6 +22,7 @@ const PARAMS_TIME := "time"
 # Scene Objects
 
 onready var _time_label: Label = $VBoxContainer/TimeLabel
+onready var _focus_button: Button = $VBoxContainer/HBoxContainer/TryAgainButton
 
 
 ####################################################################################
@@ -32,6 +33,8 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 
     if params.has(PARAMS_TIME):
         _time_label.text = Util.millis_to_string(params[PARAMS_TIME])
+
+    _focus_button.grab_focus()
 
 
 ####################################################################################
