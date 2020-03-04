@@ -115,9 +115,13 @@ func _physics_process(delta: float) -> void:
             _die()
             return
 
-    # If we're on the ground, we need to slow down
+    # If we're on the ground, we need to slow down and possibly collide with houses
     if _on_ground:
-        new_velocity.x = lerp(new_velocity.x, 0.0, SLOW_DOWN_ALPHA)
+        if _has_main_body_hit_stuff():
+            _die()
+            return
+        else:
+            new_velocity.x = lerp(new_velocity.x, 0.0, SLOW_DOWN_ALPHA)
 
     # Cange pitch of the plane if only one of its wheels has touched down
     _touch_down_both_wheels(_front_wheel_ray, _rear_wheel_ray)

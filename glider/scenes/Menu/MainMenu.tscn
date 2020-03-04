@@ -30,6 +30,8 @@ script = ExtResource( 4 )
 
 [node name="Aircraft" parent="Graphics" instance=ExtResource( 3 )]
 position = Vector2( 120, 144.187 )
+collision_layer = 0
+collision_mask = 0
 
 [node name="Clouds" parent="Graphics" instance=ExtResource( 1 )]
 margin_left = -129.632
@@ -52,13 +54,13 @@ __meta__ = {
 }
 
 [node name="NewGameButton" type="Button" parent="Controls"]
-margin_right = 340.0
+margin_right = 339.0
 margin_bottom = 48.0
 text = "New Game"
 
 [node name="QuitButton" type="Button" parent="Controls"]
 margin_top = 68.0
-margin_right = 340.0
+margin_right = 339.0
 margin_bottom = 116.0
 text = "Exit"
 [connection signal="pressed" from="Controls/NewGameButton" to="." method="_on_NewGameButton_pressed"]

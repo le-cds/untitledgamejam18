@@ -48,7 +48,11 @@ __meta__ = {
 }
 textures = [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 6 ) ]
 pre_time = 0.5
+display_time = 2.0
 fade_time = 0.4
+black_time = 0.1
+repeat = false
+skippable = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Splash"]
 anims/FadeSplash = SubResource( 1 )
