@@ -24,21 +24,22 @@ func _ready():
     _velocity = initial_velocity
 
 func _physics_process(delta):
-    print(_velocity)
     var _lift_amplitude = 0.5 * lift_coefficient * air_density * _velocity.length_squared() * wing_area
     var _drag_amplitude = 0.5 * drag_coefficient * air_density * _velocity.length_squared() * wing_area
     var _weight_force = plane_mass * gravity
 
     var _force = Vector3(
-        _lift_amplitude * sin(rotation.z) - _drag_amplitude * cos(rotation.z),
-        _lift_amplitude * cos(rotation.z) + _drag_amplitude * sin(rotation.z) - _weight_force,
+        # _lift_amplitude * sin(rotation.z) - _drag_amplitude * cos(rotation.z),
+        0.0,
+        # _lift_amplitude * cos(rotation.z) + _drag_amplitude * sin(rotation.z) - _weight_force,
+        - _weight_force,
         0.0
     )
-    print(_lift_amplitude)
 
     var _acceleration = _force / plane_mass
 
-    _velocity += _acceleration * delta
+    _velocity = _acceleration * delta
+    print(_velocity)
 
     move_and_collide(_velocity * delta)
     # var _lift_force = Vector3(sin(_body.rotation.z), 0.0, 0.0) * _lift_amplitude

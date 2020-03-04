@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/Plane2D/Plane2D.tscn" type="PackedScene" id=1]
+[ext_resource path="res://wyltjg52.bmp" type="Texture" id=2]
 
 [node name="World2D" type="Node2D"]
 
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 4741.22, 3112.9 )
+scale = Vector2( 4.93598, 5.75121 )
+texture = ExtResource( 2 )
+
 [node name="Plane2D" parent="." instance=ExtResource( 1 )]
-position = Vector2( 103.775, 211.271 )
-plane_mass = 2500.0
-lift_coefficient = 2.0
-drag_coefficient = 1.0
-air_density = 1.2
-initial_velocity = Vector2( 20, 20 )
-initial_angle = 34.0
+position = Vector2( 78.682, 113.802 )
+
+[node name="Camera2D" type="Camera2D" parent="Plane2D"]
+current = true
