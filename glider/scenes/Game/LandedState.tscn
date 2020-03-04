@@ -36,19 +36,26 @@ align = 1
 margin_top = 148.0
 margin_right = 960.0
 margin_bottom = 192.0
-custom_constants/separation = 41
+custom_constants/separation = 40
 alignment = 1
 
+[node name="MenuButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 193.0
+margin_right = 357.0
+margin_bottom = 44.0
+text = "Main Menu"
+
 [node name="TryAgainButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 294.0
-margin_right = 454.0
+margin_left = 397.0
+margin_right = 557.0
 margin_bottom = 44.0
 text = "Try Again"
 
 [node name="NextLevelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 495.0
-margin_right = 665.0
+margin_left = 597.0
+margin_right = 767.0
 margin_bottom = 44.0
 text = "Next Level"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]

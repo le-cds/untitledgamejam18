@@ -34,11 +34,19 @@ align = 1
 margin_top = 116.0
 margin_right = 960.0
 margin_bottom = 160.0
+custom_constants/separation = 40
 alignment = 1
 
+[node name="MenuButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+margin_left = 298.0
+margin_right = 462.0
+margin_bottom = 44.0
+text = "Main Menu"
+
 [node name="TryAgainButton" type="Button" parent="VBoxContainer/HBoxContainer"]
-margin_left = 400.0
-margin_right = 560.0
+margin_left = 502.0
+margin_right = 662.0
 margin_bottom = 44.0
 text = "Try Again"
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]

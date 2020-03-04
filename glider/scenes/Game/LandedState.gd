@@ -6,6 +6,8 @@ class_name LandedState
 ####################################################################################
 # Signals
 
+# Emitted when the player clicks the Main Menu button.
+signal main_menu()
 # Emitted when the player clicks the Try Again button.
 signal try_again()
 # Emitted when the player clicks the Next Level button.
@@ -46,3 +48,7 @@ func _on_TryAgainButton_pressed() -> void:
 
 func _on_NextLevelButton_pressed() -> void:
     emit_signal("next_level")
+
+
+func _on_MenuButton_pressed() -> void:
+    emit_signal("main_menu")

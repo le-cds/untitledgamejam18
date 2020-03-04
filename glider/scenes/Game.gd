@@ -18,4 +18,4 @@ func _ready() -> void:
 
 func start() -> void:
     # For now, simply start up the level loader which loads the first level
-    _state_machine.transition_push(Constants.MENU_STATE_LOAD_LEVEL)
+    _state_machine.transition_push(Constants.MENU_STATE_MAIN)

@@ -6,6 +6,8 @@ class_name FailState
 ####################################################################################
 # Signals
 
+# Emitted when the player clicks the Main Menu button.
+signal main_menu()
 # Emitted when the player clicks the Try Again button.
 signal try_again()
 
@@ -42,3 +44,7 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 
 func _on_TryAgainButton_pressed() -> void:
     emit_signal("try_again")
+
+
+func _on_MenuButton_pressed() -> void:
+    emit_signal("main_menu")

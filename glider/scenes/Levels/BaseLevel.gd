@@ -36,3 +36,7 @@ func _on_try_again() -> void:
 func _on_next_level() -> void:
     transition_replace_single(Constants.MENU_STATE_LOAD_LEVEL,
         { Constants.MENU_PARAM_LEVEL: Constants.MENU_PARAM_LEVEL_NEXT })
+
+
+func _on_main_menu() -> void:
+    transition_replace_all(Constants.MENU_STATE_MAIN)
