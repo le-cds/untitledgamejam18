@@ -1,7 +1,7 @@
 extends Node
 
 # Number of levels
-const LEVELS = 4
+const LEVELS = 5
 
 # Node groups
 const GROUP_LEVEL_AREA = "level_areas"

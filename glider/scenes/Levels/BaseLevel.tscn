@@ -12,7 +12,7 @@
 [sub_resource type="PhysicsMaterial" id=1]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 233.744, 136.71 )
+extents = Vector2( 408.894, 233.37 )
 
 [node name="Base" type="Node2D"]
 script = ExtResource( 10 )

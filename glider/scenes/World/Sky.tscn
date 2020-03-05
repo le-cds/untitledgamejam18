@@ -1,11 +1,10 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scenes/World/skybox.png" type="Texture" id=1]
-[ext_resource path="res://shaders/AutoHorizontallyRepeatingTexture.shader" type="Shader" id=2]
+[ext_resource path="res://shaders/AutoRepeatingTexture.shader" type="Shader" id=2]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )
-shader_param/scroll_speed = 0.5
 shader_param/initial_uv_offset = null
 
 [node name="Sky" type="TextureRect"]

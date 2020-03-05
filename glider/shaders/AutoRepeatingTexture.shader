@@ -10,7 +10,7 @@ void fragment() {
     }
     // Ensure that we flip every second texture vertically
     if (int(uv.y) % 2 == 0) {
-        uv *= vec2(1, 1);
+        uv *= vec2(1, -1);
     }
     
     vec4 color = texture(TEXTURE, uv);
