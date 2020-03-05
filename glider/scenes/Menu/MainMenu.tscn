@@ -51,10 +51,10 @@ texture = ExtResource( 6 )
 
 [node name="CloudsForeground" parent="Graphics" instance=ExtResource( 1 )]
 modulate = Color( 1, 1, 1, 0.843137 )
-margin_left = -767.0
-margin_top = -96.0
-margin_right = 1623.0
-margin_bottom = 446.0
+margin_left = -897.0
+margin_top = -100.0
+margin_right = 1644.0
+margin_bottom = 657.0
 
 [node name="Controls" type="VBoxContainer" parent="."]
 anchor_right = 0.658
@@ -69,13 +69,13 @@ __meta__ = {
 }
 
 [node name="NewGameButton" type="Button" parent="Controls"]
-margin_right = 339.0
+margin_right = 340.0
 margin_bottom = 48.0
 text = "New Game"
 
 [node name="QuitButton" type="Button" parent="Controls"]
 margin_top = 68.0
-margin_right = 339.0
+margin_right = 340.0
 margin_bottom = 116.0
 text = "Exit"
 [connection signal="pressed" from="Controls/NewGameButton" to="." method="_on_NewGameButton_pressed"]
