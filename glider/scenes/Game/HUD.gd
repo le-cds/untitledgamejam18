@@ -1,4 +1,4 @@
-extends Node
+extends CanvasLayer
 
 class_name HUD
 

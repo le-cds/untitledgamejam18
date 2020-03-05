@@ -5,9 +5,12 @@
 [ext_resource path="res://themes/InGameTheme.tres" type="Theme" id=3]
 
 [node name="LandedState" type="Node2D"]
+z_as_relative = false
 script = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Canvas"]
 margin_left = 2.0
 margin_top = 129.0
 margin_right = 962.0
@@ -18,13 +21,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LandedLabel" type="Label" parent="VBoxContainer"]
+[node name="LandedLabel" type="Label" parent="Canvas/VBoxContainer"]
 margin_right = 960.0
 margin_bottom = 38.0
 text = "Landing Successful!"
 align = 1
 
-[node name="TimeLabel" type="Label" parent="VBoxContainer"]
+[node name="TimeLabel" type="Label" parent="Canvas/VBoxContainer"]
 margin_top = 58.0
 margin_right = 960.0
 margin_bottom = 128.0
@@ -32,30 +35,31 @@ custom_fonts/font = ExtResource( 1 )
 text = "00:00:00"
 align = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas/VBoxContainer"]
 margin_top = 148.0
 margin_right = 960.0
 margin_bottom = 192.0
 custom_constants/separation = 40
 alignment = 1
 
-[node name="MenuButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="MenuButton" type="Button" parent="Canvas/VBoxContainer/HBoxContainer"]
 margin_left = 193.0
 margin_right = 357.0
 margin_bottom = 44.0
 text = "Main Menu"
 
-[node name="TryAgainButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="TryAgainButton" type="Button" parent="Canvas/VBoxContainer/HBoxContainer"]
 margin_left = 397.0
 margin_right = 557.0
 margin_bottom = 44.0
 text = "Try Again"
 
-[node name="NextLevelButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="NextLevelButton" type="Button" parent="Canvas/VBoxContainer/HBoxContainer"]
 margin_left = 597.0
 margin_right = 767.0
 margin_bottom = 44.0
 text = "Next Level"
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Canvas/VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="Canvas/VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]
+[connection signal="pressed" from="Canvas/VBoxContainer/HBoxContainer/NextLevelButton" to="." method="_on_NextLevelButton_pressed"]
