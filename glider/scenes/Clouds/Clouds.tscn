@@ -2,8 +2,7 @@
 
 [ext_resource path="res://materials/ScrollingTexture.material" type="Material" id=1]
 [ext_resource path="res://scripts/ScrollingTexture.gd" type="Script" id=2]
-[ext_resource path="res://scenes/Clouds/clouds.png" type="Texture" id=3]
-
+[ext_resource path="res://scenes/Clouds/clouds-unclipped.png" type="Texture" id=3]
 
 [node name="Clouds" type="TextureRect"]
 material = ExtResource( 1 )
