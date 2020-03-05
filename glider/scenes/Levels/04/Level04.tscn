@@ -22,7 +22,7 @@ margin_top = -1.78159
 margin_right = 1097.1
 margin_bottom = 540.218
 
-[node name="Sprite" type="Sprite" parent="Visuals" index="2"]
+[node name="Landscape" type="Sprite" parent="Visuals" index="2"]
 position = Vector2( 953.99, 270 )
 texture = ExtResource( 4 )
 
