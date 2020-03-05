@@ -44,3 +44,4 @@ shape = SubResource( 1 )
 [node name="Camera2D" parent="Aircraft" index="7"]
 limit_right = 1900
 limit_bottom = 1080
+drag_margin_bottom = 0.0
