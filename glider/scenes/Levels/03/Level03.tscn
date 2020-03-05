@@ -7,6 +7,7 @@
 [ext_resource path="res://scenes/World/Sky.tscn" type="PackedScene" id=8]
 
 [node name="Level03" instance=ExtResource( 3 )]
+state_id = "level03"
 
 [node name="Sky" parent="Visuals" index="0" instance=ExtResource( 8 )]
 margin_right = 2879.0

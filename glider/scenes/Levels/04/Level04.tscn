@@ -10,6 +10,7 @@
 extents = Vector2( 955.894, 270 )
 
 [node name="Level04" instance=ExtResource( 1 )]
+state_id = "level04"
 
 [node name="Sky" parent="Visuals" index="0" instance=ExtResource( 2 )]
 margin_left = 2.33276
