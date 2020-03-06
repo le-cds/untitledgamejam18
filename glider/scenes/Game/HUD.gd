@@ -12,6 +12,9 @@ onready var _gforce_label: Label = $GForceLabel
 ################################################################################
 # State
 
+# Modulation to be passed on to our GUI elements for smooth fading.
+export(Color) var modulate := Color(1, 1, 1, 1) setget set_modulate
+
 # Whether the timer is currently running or not.
 var _timer_running := false setget set_timer_running
 # Number of milliseconds elapsed since starting the timer.
@@ -25,6 +28,10 @@ func _ready() -> void:
     # We don't need processing as long as the timer is not running
     set_process(false)
     set_physics_process(false)
+    
+    # Apply initial modulate values now that our scene object variables are
+    # initialized
+    set_modulate(modulate)
 
 
 func _physics_process(delta: float) -> void:
@@ -34,6 +41,14 @@ func _physics_process(delta: float) -> void:
 
 ################################################################################
 # Accessors
+
+func set_modulate(color: Color) -> void:
+    modulate = color
+    
+    if _time_label:
+        _time_label.modulate = modulate
+        _gforce_label.modulate = modulate
+
 
 func set_timer_running(running: bool) -> void:
     if running != _timer_running:
