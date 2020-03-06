@@ -2,14 +2,23 @@ extends State
 
 
 ####################################################################################
+# Scene Objects
+
+onready var _aircraft: Aircraft = $Aircraft
+onready var _state_machine: StateMachine = $StateMachine
+onready var _state_playing: PlayingState = $StateMachine/PlayingState
+onready var _state_landed: LandedState = $StateMachine/LandedState
+
+
+####################################################################################
 # Scene Lifecycle
 
 func _ready() -> void:
-    $StateMachine/PlayingState.aircraft = $Aircraft
+    _state_playing.aircraft = _aircraft
 
     # If the scene is started directly from the editor for rapid prototyping,
     if self.get_parent() == get_tree().root:
-        $StateMachine.transition_push(Constants.GAME_STATE_WAITING)
+        _state_machine.transition_push(Constants.GAME_STATE_WAITING)
 
 
 ####################################################################################
@@ -18,7 +27,10 @@ func _ready() -> void:
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
 
-    $StateMachine.transition_push(Constants.GAME_STATE_WAITING)
+    if params.has(Constants.LEVEL_PARAM_IS_LAST):
+        _state_landed.show_next_level_button(not params[Constants.LEVEL_PARAM_IS_LAST])
+    
+    _state_machine.transition_push(Constants.GAME_STATE_WAITING)
 
 
 ####################################################################################

@@ -26,6 +26,11 @@ const PARAMS_TIME := "time"
 onready var _container := $Canvas/VBoxContainer
 onready var _time_label: Label = $Canvas/VBoxContainer/TimeLabel
 onready var _focus_button: Button = $Canvas/VBoxContainer/HBoxContainer/TryAgainButton
+onready var _next_level_button: Button = $Canvas/VBoxContainer/HBoxContainer/NextLevelButton
+
+
+####################################################################################
+# Scene Lifecycle
 
 func _ready():
     # Since we can not control the visibility of canvas nodes, we need to hide the
@@ -33,8 +38,9 @@ func _ready():
     # ... kind of annoying...
     _container.hide()
 
+
 ####################################################################################
-# State
+# State Lifecycle
 
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
@@ -43,6 +49,14 @@ func state_started(prev_state: State, params: Dictionary) -> void:
         _time_label.text = Util.millis_to_string(params[PARAMS_TIME])
 
     _focus_button.grab_focus()
+
+
+####################################################################################
+# Configuration
+
+# Shows or hides the next level button.
+func show_next_level_button(show: bool) -> void:
+    _next_level_button.visible = show
 
 
 ####################################################################################
@@ -58,6 +72,7 @@ func _on_NextLevelButton_pressed() -> void:
 
 func _on_MenuButton_pressed() -> void:
     emit_signal("main_menu")
+
 
 # Clone the visibility of the root node to the top-most UI container
 func _on_visibility_changed():

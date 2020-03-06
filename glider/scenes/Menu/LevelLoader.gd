@@ -87,11 +87,17 @@ func _should_start_level() -> void:
         _current_level_node = _level_loader.get_resource().instance()
         _level_loader = null
 
-        # Register with state machine and switch to level
+        # Register level with state machine
         var level_state_id := _state_id_for_level(_current_level)
         _current_level_node.state_id = level_state_id
         self.get_parent().add_state(_current_level_node)
-        transition_replace_single(level_state_id)
+        
+        # Switch to level
+        var params = {
+            Constants.LEVEL_PARAM_LEVEL_NUMBER: _current_level,
+            Constants.LEVEL_PARAM_IS_LAST: _current_level == Constants.LEVELS
+        }
+        transition_replace_single(level_state_id, params)
 
 
 ####################################################################################
