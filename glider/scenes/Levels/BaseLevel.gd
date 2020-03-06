@@ -33,6 +33,16 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     _state_machine.transition_push(Constants.GAME_STATE_WAITING)
 
 
+func state_deactivated() -> void:
+    .state_deactivated()
+    
+    # When we are deactivated, that means that either the level is being changed or
+    # we're going back to the menu. Unload us!
+    if get_parent() is StateMachine:
+        (get_parent() as StateMachine).remove_state(self.state_id)
+    queue_free()
+
+
 ####################################################################################
 # Event Handling
 

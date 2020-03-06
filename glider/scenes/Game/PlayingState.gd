@@ -21,8 +21,9 @@ var aircraft: Aircraft setget set_aircraft
 var _is_aircraft_valid = false
 
 
-#
-# Tick
+####################################################################################
+# Scene Lifecycle
+
 func _physics_process(delta):
     if _is_aircraft_valid:
         _hud.set_gravity(aircraft.get_gravity())

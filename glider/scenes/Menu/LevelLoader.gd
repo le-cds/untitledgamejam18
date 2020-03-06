@@ -39,11 +39,6 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     _audio.play(0)
     _animation.play("WobbleAircraft")
 
-    # If there is a current level node, get rid of it
-    if _current_level_node:
-        self.get_parent().remove_state(_state_id_for_level(_current_level))
-        _current_level_node.queue_free()
-
     # Check which level to load
     # TODO Check absolute instead of relative level loading as well.
     if params.has(Constants.MENU_PARAM_LEVEL):
