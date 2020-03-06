@@ -1,6 +1,10 @@
-# untitledgamejam18
+# Earth Saves Peeps
 
-Our submission for the Untitled Game Jam #18.
+![Earth Saves Peeps](glider/scenes/Menu/title.png)
+
+This is our glorious submission for [Untitled Game Jam #18](https://itch.io/jam/untitled-game-jam-18). Bath in the excellence of this screenshot:
+
+![Unbelievably awesome screenshot](screenshot.png)
 
 
 ## Credits
