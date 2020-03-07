@@ -14,6 +14,7 @@ signal main_menu()
 ####################################################################################
 # Scene Objects
 
+onready var _animation: AnimationPlayer = $CanvasLayer/AnimationPlayer
 onready var _container: Container = $CanvasLayer/VBoxContainer
 onready var _focus_button: Button = $CanvasLayer/VBoxContainer/HBoxContainer/ContinueButton
 
@@ -31,10 +32,8 @@ var _is_properly_paused := false
 # Scene Lifecycle
 
 func _ready():
-    # Since we can not control the visibility of canvas nodes, we need to hide the
-    # top-most UI container, so it is only displayed when requested.
-    # ... kind of annoying...
-    _container.hide()
+    set_yield_on_pause(true)
+    _container.modulate = Color.transparent
 
 
 func _process(delta: float) -> void:
@@ -55,6 +54,8 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     get_tree().paused = true
     _is_properly_paused = false
 
+    # Setup UI
+    _animation.play_backwards("FadeMenu")
     _focus_button.grab_focus()
 
 
@@ -63,6 +64,9 @@ func state_paused(next_state: State) -> void:
 
     # Recover from Pause mode
     get_tree().paused = false
+
+    _animation.play("FadeMenu")
+    yield(_animation, "animation_finished")
 
 
 ####################################################################################
@@ -82,8 +86,3 @@ func _on_MenuButton_pressed() -> void:
 
 func _on_ContinueButton_pressed() -> void:
     _continue()
-
-
-# Clone the visibility of the root node to the top-most UI container
-func _on_visibility_changed():
-    _container.visible = visible

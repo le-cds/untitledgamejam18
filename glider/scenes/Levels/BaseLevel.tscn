@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scenes/Game/LandedState.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scenes/Game/FailState.tscn" type="PackedScene" id=2]
@@ -15,12 +15,31 @@
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 408.894, 233.37 )
 
+[sub_resource type="Animation" id=3]
+resource_name = "Fade"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="Base" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 10 )
 
 [node name="Visuals" type="Node2D" parent="."]
+pause_mode = 1
 
 [node name="Colliders" type="Node2D" parent="."]
+pause_mode = 1
 
 [node name="FloorCollider" type="StaticBody2D" parent="Colliders"]
 physics_material_override = SubResource( 1 )
@@ -50,6 +69,7 @@ shape = SubResource( 2 )
 ]]
 
 [node name="Aircraft" parent="." instance=ExtResource( 5 )]
+pause_mode = 1
 position = Vector2( 78.6517, 156.989 )
 
 [node name="PlayerInputController" type="Node" parent="Aircraft"]
@@ -67,6 +87,7 @@ editor_draw_limits = true
 editor_draw_drag_margin = true
 
 [node name="StateMachine" type="Node2D" parent="."]
+pause_mode = 1
 script = ExtResource( 7 )
 
 [node name="WaitingState" type="Node2D" parent="StateMachine"]
@@ -89,6 +110,9 @@ state_id = "failed"
 [node name="PauseState" parent="StateMachine" instance=ExtResource( 3 )]
 visible = false
 state_id = "paused"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Fade = SubResource( 3 )
 [connection signal="main_menu" from="StateMachine/LandedState" to="." method="_on_main_menu"]
 [connection signal="next_level" from="StateMachine/LandedState" to="." method="_on_next_level"]
 [connection signal="try_again" from="StateMachine/LandedState" to="." method="_on_try_again"]

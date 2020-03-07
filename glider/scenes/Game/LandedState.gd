@@ -24,6 +24,7 @@ const PARAMS_TIME := "time"
 # Scene Objects
 
 onready var _container := $Canvas/VBoxContainer
+onready var _animation := $Canvas/AnimationPlayer
 onready var _time_label: Label = $Canvas/VBoxContainer/TimeLabel
 onready var _focus_button: Button = $Canvas/VBoxContainer/HBoxContainer/TryAgainButton
 onready var _next_level_button: Button = $Canvas/VBoxContainer/HBoxContainer/NextLevelButton
@@ -33,10 +34,8 @@ onready var _next_level_button: Button = $Canvas/VBoxContainer/HBoxContainer/Nex
 # Scene Lifecycle
 
 func _ready():
-    # Since we can not control the visibility of canvas nodes, we need to hide the
-    # top-most UI container, so it is only displayed when requested.
-    # ... kind of annoying...
-    _container.hide()
+    set_yield_on_pause(true)
+    _container.modulate = Color.transparent
 
 
 ####################################################################################
@@ -48,7 +47,16 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     if params.has(PARAMS_TIME):
         _time_label.text = Util.millis_to_string(params[PARAMS_TIME])
 
+    # Setup UI
+    _animation.play_backwards("FadeMenu")
     _focus_button.grab_focus()
+
+
+func state_paused(next_state: State) -> void:
+    .state_paused(next_state)
+
+    _animation.play("FadeMenu")
+    yield(_animation, "animation_finished")
 
 
 ####################################################################################
@@ -72,8 +80,3 @@ func _on_NextLevelButton_pressed() -> void:
 
 func _on_MenuButton_pressed() -> void:
     emit_signal("main_menu")
-
-
-# Clone the visibility of the root node to the top-most UI container
-func _on_visibility_changed():
-    _container.visible = visible

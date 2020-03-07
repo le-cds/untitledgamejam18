@@ -17,10 +17,10 @@ file_prefix = "glider"
 [node name="StateMachine" type="Node2D" parent="."]
 script = ExtResource( 2 )
 
-[node name="MainMenu" parent="StateMachine" instance=ExtResource( 5 )]
-visible = false
-state_id = "main"
-
 [node name="LevelLoader" parent="StateMachine" instance=ExtResource( 4 )]
 visible = false
 state_id = "loader"
+
+[node name="MainMenu" parent="StateMachine" instance=ExtResource( 5 )]
+visible = false
+state_id = "main"

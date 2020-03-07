@@ -20,12 +20,22 @@ const PARAMS_REASON := "reason"
 ####################################################################################
 # Scene Objects
 
-onready var _reason_label: Label = $VBoxContainer/FailReasonLabel
-onready var _focus_button: Button = $VBoxContainer/HBoxContainer/TryAgainButton
+onready var _container: Container = $CanvasLayer/VBoxContainer
+onready var _animation: AnimationPlayer = $CanvasLayer/AnimationPlayer
+onready var _reason_label: Label = $CanvasLayer/VBoxContainer/FailReasonLabel
+onready var _focus_button: Button = $CanvasLayer/VBoxContainer/HBoxContainer/TryAgainButton
 
 
 ####################################################################################
-# State
+# Scene Lifecycle
+
+func _ready() -> void:
+    set_yield_on_pause(true)
+    _container.modulate = Color.transparent
+
+
+####################################################################################
+# State Lifecycle
 
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
@@ -36,7 +46,16 @@ func state_started(prev_state: State, params: Dictionary) -> void:
         elif params[PARAMS_REASON] == Aircraft.State.LEFT:
             _reason_label.text = "You bailed."
 
+    # Setup UI
+    _animation.play_backwards("FadeMenu")
     _focus_button.grab_focus()
+
+
+func state_paused(next_state: State) -> void:
+    .state_paused(next_state)
+
+    _animation.play("FadeMenu")
+    yield(_animation, "animation_finished")
 
 
 ####################################################################################

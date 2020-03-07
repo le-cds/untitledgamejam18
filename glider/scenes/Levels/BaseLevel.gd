@@ -4,10 +4,11 @@ extends State
 ####################################################################################
 # Scene Objects
 
-onready var _aircraft: Aircraft = $Aircraft
-onready var _state_machine: StateMachine = $StateMachine
-onready var _state_playing: PlayingState = $StateMachine/PlayingState
-onready var _state_landed: LandedState = $StateMachine/LandedState
+onready var _animation := $AnimationPlayer
+onready var _aircraft := $Aircraft
+onready var _state_machine := $StateMachine
+onready var _state_playing := $StateMachine/PlayingState
+onready var _state_landed := $StateMachine/LandedState
 
 
 ####################################################################################
@@ -15,6 +16,8 @@ onready var _state_landed: LandedState = $StateMachine/LandedState
 
 func _ready() -> void:
     _state_playing.aircraft = _aircraft
+
+    set_yield_on_pause(true)
 
     # If the scene is started directly from the editor for rapid prototyping,
     if self.get_parent() == get_tree().root:
@@ -30,7 +33,17 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     if params.has(Constants.LEVEL_PARAM_IS_LAST):
         _state_landed.show_next_level_button(not params[Constants.LEVEL_PARAM_IS_LAST])
 
+    _animation.play_backwards("Fade")
+
     _state_machine.transition_push(Constants.GAME_STATE_WAITING)
+
+
+func state_paused(next_state: State) -> void:
+    .state_paused(next_state)
+
+    # Fade out
+    _animation.play("Fade")
+    yield(_animation, "animation_finished")
 
 
 func state_deactivated() -> void:

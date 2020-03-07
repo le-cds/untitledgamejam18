@@ -4,8 +4,18 @@ extends State
 ####################################################################################
 # Scene Objects
 
-onready var _animation: AnimationPlayer = $Graphics/AnimationPlayer
-onready var _play_button: Button = $Controls/NewGameButton
+onready var _menu_animation := $MenuAnimation
+onready var _menu := $Menu
+onready var _aircraft_animation := $Menu/Graphics/AircraftAnimation
+onready var _play_button := $Menu/Controls/NewGameButton
+
+
+####################################################################################
+# Scene Lifecycle
+
+func _ready() -> void:
+    set_yield_on_pause(true)
+    _menu.modulate = Color.transparent
 
 
 ####################################################################################
@@ -14,20 +24,31 @@ onready var _play_button: Button = $Controls/NewGameButton
 func state_activated() -> void:
     .state_activated()
 
-    _animation.play("Wobble")
+    _aircraft_animation.play("Wobble")
 
 
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
 
+    print("Starting main menu")
+
+    _menu_animation.play_backwards("FadeMenu")
     _play_button.grab_focus()
+
+
+func state_paused(next_state: State) -> void:
+    .state_paused(next_state)
+
+    print("Pausing main menu")
+
+    _menu_animation.play("FadeMenu")
+    yield(_menu_animation, "animation_finished")
 
 
 func state_deactivated() -> void:
     .state_deactivated()
 
-    _animation.stop()
-
+    _aircraft_animation.stop()
 
 
 ####################################################################################

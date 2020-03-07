@@ -1,12 +1,30 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://themes/InGameTheme.tres" type="Theme" id=1]
 [ext_resource path="res://scenes/Game/FailState.gd" type="Script" id=2]
 
+[sub_resource type="Animation" id=1]
+resource_name = "FadeMenu"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
 [node name="FailState" type="Node2D"]
 script = ExtResource( 2 )
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
 margin_left = 2.0
 margin_top = 155.0
 margin_right = 962.0
@@ -17,36 +35,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InsultLabel" type="Label" parent="VBoxContainer"]
+[node name="InsultLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 margin_right = 960.0
 margin_bottom = 38.0
 text = "Good job, asshole."
 align = 1
 
-[node name="FailReasonLabel" type="Label" parent="VBoxContainer"]
+[node name="FailReasonLabel" type="Label" parent="CanvasLayer/VBoxContainer"]
 margin_top = 58.0
 margin_right = 960.0
 margin_bottom = 96.0
 text = "FAIL RESON"
 align = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
 margin_top = 116.0
 margin_right = 960.0
 margin_bottom = 160.0
 custom_constants/separation = 40
 alignment = 1
 
-[node name="MenuButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="MenuButton" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 margin_left = 298.0
 margin_right = 462.0
 margin_bottom = 44.0
 text = "Main Menu"
 
-[node name="TryAgainButton" type="Button" parent="VBoxContainer/HBoxContainer"]
+[node name="TryAgainButton" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
 margin_left = 502.0
 margin_right = 662.0
 margin_bottom = 44.0
 text = "Try Again"
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
-[connection signal="pressed" from="VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+anims/FadeMenu = SubResource( 1 )
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/MenuButton" to="." method="_on_MenuButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/HBoxContainer/TryAgainButton" to="." method="_on_TryAgainButton_pressed"]

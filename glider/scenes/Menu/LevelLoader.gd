@@ -7,9 +7,9 @@ class_name LevelLoader
 ####################################################################################
 # Scene Objects
 
-onready var _animation: AnimationPlayer = $AnimationPlayer
-onready var _audio: AudioStreamPlayer = $AudioStreamPlayer
-onready var _timer: Timer = $Timer
+onready var _aircraft_animation := $UI/AircraftAnimation
+onready var _audio := $AudioStreamPlayer
+onready var _timer := $Timer
 
 
 ####################################################################################
@@ -37,7 +37,7 @@ func state_started(prev_state: State, params: Dictionary) -> void:
     _timer_finished = false
     _timer.start()
     _audio.play(0)
-    _animation.play("WobbleAircraft")
+    _aircraft_animation.play("WobbleAircraft")
 
     # Check which level to load
     # TODO Check absolute instead of relative level loading as well.
@@ -60,7 +60,7 @@ func state_paused(next_state: State) -> void:
     .state_paused(next_state)
 
     _audio.stop()
-    _animation.stop(true)
+    _aircraft_animation.stop(true)
 
 
 ####################################################################################
@@ -86,7 +86,7 @@ func _should_start_level() -> void:
         var level_state_id := _state_id_for_level(_current_level)
         _current_level_node.state_id = level_state_id
         self.get_parent().add_state(_current_level_node)
-        
+
         # Switch to level
         var params = {
             Constants.LEVEL_PARAM_LEVEL_NUMBER: _current_level,
