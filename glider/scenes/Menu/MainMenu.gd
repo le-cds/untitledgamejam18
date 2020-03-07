@@ -32,7 +32,7 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 
     print("Starting main menu")
 
-    _menu_animation.play_backwards("FadeMenu")
+    _menu_animation.play("PresentMenu")
     _play_button.grab_focus()
 
 
