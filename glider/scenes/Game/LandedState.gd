@@ -71,12 +71,15 @@ func show_next_level_button(show: bool) -> void:
 # Event Handling
 
 func _on_TryAgainButton_pressed() -> void:
-    emit_signal("try_again")
+    if is_running():
+        emit_signal("try_again")
 
 
 func _on_NextLevelButton_pressed() -> void:
-    emit_signal("next_level")
+    if is_running():
+        emit_signal("next_level")
 
 
 func _on_MenuButton_pressed() -> void:
-    emit_signal("main_menu")
+    if is_running():
+        emit_signal("main_menu")

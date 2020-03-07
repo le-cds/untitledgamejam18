@@ -38,6 +38,3 @@ tile_data = PoolIntArray( 65517, 5, 0, 65519, 0, 0, 65522, 6, 0, 65525, 3, 0, 65
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/LevelCollider" index="0"]
 position = Vector2( 480, 270 )
 shape = SubResource( 1 )
-
-[node name="Camera2D" parent="Aircraft" index="7"]
-position = Vector2( 0, -2 )

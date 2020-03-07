@@ -62,8 +62,10 @@ func state_paused(next_state: State) -> void:
 # Event Handling
 
 func _on_TryAgainButton_pressed() -> void:
-    emit_signal("try_again")
+    if is_running():
+        emit_signal("try_again")
 
 
 func _on_MenuButton_pressed() -> void:
-    emit_signal("main_menu")
+    if is_running():
+        emit_signal("main_menu")

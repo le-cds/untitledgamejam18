@@ -253,6 +253,8 @@ func set_input_controller(controller: InputController) -> void:
     input_controller = controller
     self.add_child(input_controller)
 
+
+# Returns the (unscaled) gravity acting on the plane.
 func get_gravity() -> float:
     return _gravity
 

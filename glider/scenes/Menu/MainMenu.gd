@@ -30,16 +30,12 @@ func state_activated() -> void:
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
 
-    print("Starting main menu")
-
     _menu_animation.play("PresentMenu")
     _play_button.grab_focus()
 
 
 func state_paused(next_state: State) -> void:
     .state_paused(next_state)
-
-    print("Pausing main menu")
 
     _menu_animation.play("FadeMenu")
     yield(_menu_animation, "animation_finished")

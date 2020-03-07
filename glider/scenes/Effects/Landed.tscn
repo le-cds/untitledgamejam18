@@ -39,3 +39,8 @@ process_material = SubResource( 3 )
 stream = ExtResource( 1 )
 volume_db = -6.0
 autoplay = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 9.0
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

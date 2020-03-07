@@ -14,6 +14,7 @@ onready var _animation: AnimationPlayer = $AnimationPlayer
 ####################################################################################
 # State
 
+# The aircraft the player is playing with.
 var aircraft: Aircraft setget set_aircraft
 
 # We need this flag to prevent access to the invalidated airplane
@@ -37,16 +38,14 @@ func _physics_process(delta):
 ####################################################################################
 # State Lifecycle
 
-func state_activated() -> void:
-    .state_activated()
-
-    # Start up everything
-    aircraft.start()
-    _hud.set_timer_running(true)
-
-
 func state_started(prev_state: State, params: Dictionary) -> void:
     .state_started(prev_state, params)
+
+    # If we've come from the waiting state, start the plane and the HUD timer
+    if prev_state.state_id == Constants.GAME_STATE_WAITING:
+        set_aircraft(params[Constants.GAME_PARAM_AIRCRAFT])
+        aircraft.start()
+        _hud.set_timer_running(true)
 
     # Fade in the HUD
     _animation.play("FadeHUD")
@@ -59,13 +58,23 @@ func state_paused(next_state: State) -> void:
     _animation.play_backwards("FadeHUD")
 
 
+func state_deactivated() -> void:
+    .state_deactivated()
+
+    # If we have an aircraft, dispose of it
+    if _is_aircraft_valid:
+        aircraft.queue_free()
+        aircraft = null
+
+
 ####################################################################################
-# Accessors
+# Aircraft Things
 
 func set_aircraft(craft: Aircraft) -> void:
     aircraft = craft
     _is_aircraft_valid = true
     aircraft.connect("stopped_flying", self, "_on_aircraft_stopped_flying")
+
 
 ####################################################################################
 # Signal Handlers
@@ -86,5 +95,6 @@ func _on_aircraft_stopped_flying(reason) -> void:
         target = Constants.GAME_STATE_FAILED
         # In non-landed case, we expect the plane may be freed
         _is_aircraft_valid = false
+        aircraft = null
 
     transition_push(target, params)

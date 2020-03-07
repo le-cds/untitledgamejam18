@@ -5,7 +5,7 @@ extends State
 # Scene Objects
 
 onready var _animation := $AnimationPlayer
-onready var _aircraft := $Aircraft
+onready var _aircraft_spawner := $AircraftSpawner
 onready var _state_machine := $StateMachine
 onready var _state_playing := $StateMachine/PlayingState
 onready var _state_landed := $StateMachine/LandedState
@@ -15,13 +15,11 @@ onready var _state_landed := $StateMachine/LandedState
 # Scene Lifecycle
 
 func _ready() -> void:
-    _state_playing.aircraft = _aircraft
-
     set_yield_on_pause(true)
 
     # If the scene is started directly from the editor for rapid prototyping,
     if self.get_parent() == get_tree().root:
-        _state_machine.transition_push(Constants.GAME_STATE_WAITING)
+        _start_new_game()
 
 
 ####################################################################################
@@ -35,7 +33,7 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 
     _animation.play_backwards("Fade")
 
-    _state_machine.transition_push(Constants.GAME_STATE_WAITING)
+    _start_new_game()
 
 
 func state_paused(next_state: State) -> void:
@@ -60,13 +58,22 @@ func state_deactivated() -> void:
 
 
 ####################################################################################
+# Game Handling
+
+func _start_new_game() -> void:
+    var params = {
+        Constants.GAME_PARAM_AIRCRAFT_SPAWNER: _aircraft_spawner
+    }
+    _state_machine.transition_replace_all(Constants.GAME_STATE_WAITING, params)
+
+
+####################################################################################
 # Event Handling
 
 # The player has clicked a Try Again button. We need to instruct the main game's
 # state machine to reload the current level.
 func _on_try_again() -> void:
-    transition_replace_single(Constants.MENU_STATE_LOAD_LEVEL,
-        { Constants.MENU_PARAM_LEVEL: Constants.MENU_PARAM_LEVEL_RELOAD })
+    _start_new_game()
 
 
 # The player has clicked a Next Level button. We need to instruct the main game's

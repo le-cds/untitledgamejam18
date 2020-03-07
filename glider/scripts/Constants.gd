@@ -25,6 +25,10 @@ const GAME_STATE_LANDED = "landed"
 const GAME_STATE_FAILED = "failed"
 const GAME_STATE_PAUSED = "paused"
 
+# Game state parameters
+const GAME_PARAM_AIRCRAFT = "aircraft"
+const GAME_PARAM_AIRCRAFT_SPAWNER = "spawner"
+
 # Level parameters
 const LEVEL_PARAM_LEVEL_NUMBER = "number"
 const LEVEL_PARAM_IS_LAST = "is_last"
