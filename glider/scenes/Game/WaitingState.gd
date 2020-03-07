@@ -6,5 +6,8 @@ class_name WaitingState
 
 
 func _physics_process(delta: float) -> void:
-    if Input.is_action_just_pressed("game_start"):
-        transition_replace_single(Constants.GAME_STATE_PLAYING)
+    if is_running():
+        if Input.is_action_just_pressed("game_start"):
+            transition_replace_single(Constants.GAME_STATE_PLAYING)
+        elif Input.is_action_just_pressed("game_pause"):
+            transition_push(Constants.GAME_STATE_PAUSED)

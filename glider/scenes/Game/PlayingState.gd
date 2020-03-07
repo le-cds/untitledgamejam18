@@ -24,6 +24,11 @@ var _is_aircraft_valid = false
 ####################################################################################
 # Scene Lifecycle
 
+func _process(delta: float) -> void:
+    if is_running() and Input.is_action_just_pressed("game_pause"):
+        transition_push(Constants.GAME_STATE_PAUSED)
+
+
 func _physics_process(delta):
     if _is_aircraft_valid:
         _hud.set_gravity(aircraft.get_gravity())
@@ -32,18 +37,24 @@ func _physics_process(delta):
 ####################################################################################
 # State Lifecycle
 
-func state_started(prev_state: State, params: Dictionary) -> void:
-    .state_started(prev_state, params)
+func state_activated() -> void:
+    .state_activated()
 
     # Start up everything
     aircraft.start()
     _hud.set_timer_running(true)
+
+
+func state_started(prev_state: State, params: Dictionary) -> void:
+    .state_started(prev_state, params)
 
     # Fade in the HUD
     _animation.play("FadeHUD")
 
 
 func state_paused(next_state: State) -> void:
+    .state_paused(next_state)
+
     # Fade out the HUD
     _animation.play_backwards("FadeHUD")
 

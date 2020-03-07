@@ -26,4 +26,5 @@ script = ExtResource( 2 )
 modulate = Color( 1, 1, 1, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
 anims/FadeHUD = SubResource( 1 )

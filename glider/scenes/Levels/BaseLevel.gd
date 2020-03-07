@@ -29,13 +29,16 @@ func state_started(prev_state: State, params: Dictionary) -> void:
 
     if params.has(Constants.LEVEL_PARAM_IS_LAST):
         _state_landed.show_next_level_button(not params[Constants.LEVEL_PARAM_IS_LAST])
-    
+
     _state_machine.transition_push(Constants.GAME_STATE_WAITING)
 
 
 func state_deactivated() -> void:
     .state_deactivated()
-    
+
+    # Ensure that our state machine properly exits
+    _state_machine.transition_pop_to_root()
+
     # When we are deactivated, that means that either the level is being changed or
     # we're going back to the menu. Unload us!
     if get_parent() is StateMachine:
@@ -60,5 +63,6 @@ func _on_next_level() -> void:
         { Constants.MENU_PARAM_LEVEL: Constants.MENU_PARAM_LEVEL_NEXT })
 
 
+# The player has clicked the Main Menu button, so take them back to the menu.
 func _on_main_menu() -> void:
     transition_replace_all(Constants.MENU_STATE_MAIN)

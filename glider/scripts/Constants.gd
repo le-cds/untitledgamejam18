@@ -23,6 +23,7 @@ const GAME_STATE_WAITING = "waiting"
 const GAME_STATE_PLAYING = "playing"
 const GAME_STATE_LANDED = "landed"
 const GAME_STATE_FAILED = "failed"
+const GAME_STATE_PAUSED = "paused"
 
 # Level parameters
 const LEVEL_PARAM_LEVEL_NUMBER = "number"
