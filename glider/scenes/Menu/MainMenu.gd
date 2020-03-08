@@ -7,6 +7,7 @@ extends State
 onready var _menu_animation := $MenuAnimation
 onready var _menu := $Menu
 onready var _aircraft_animation := $Menu/Graphics/AircraftAnimation
+onready var _version_label := $Menu/Graphics/VersionLabel
 onready var _play_button := $Menu/Controls/NewGameButton
 
 
@@ -16,6 +17,8 @@ onready var _play_button := $Menu/Controls/NewGameButton
 func _ready() -> void:
     set_yield_on_pause(true)
     _menu.modulate = Color.transparent
+
+    _version_label.text = "v" + ProjectSettings.get("application/config/version")
 
 
 ####################################################################################

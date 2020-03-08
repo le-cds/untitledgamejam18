@@ -103,6 +103,7 @@ run/main_scene="res://scenes/Root/Root.tscn"
 boot_splash/image="res://scenes/Root/splash.png"
 boot_splash/bg_color=Color( 1, 1, 1, 1 )
 config/icon="res://icon.png"
+config/version="0.1.0"
 
 [autoload]
 
