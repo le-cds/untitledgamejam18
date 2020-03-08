@@ -2,9 +2,27 @@
 
 # Uh… What?
 
-This is our glorious submission for [Untitled Game Jam #18](https://itch.io/jam/untitled-game-jam-18). Bath in the excellence of this screenshot:
+An airplane with failed engines. A crew without hope. But Earth (aka, you) sees the gravity of the situation and saves the day!
+
+Control the gravitational forces acting on the plane and guide it to a safe landing location.
 
 ![Unbelievably awesome screenshot](promo/screenshot1.png)
+
+
+## Play
+
+[Play it here!](https://chrisdanger.itch.io/earth-saves-peeps)
+
+
+## Controls
+
+* Increase gravity: Down arrow or R2 on the gamepad.
+* Decrease gravity: Up arrow or L2 on the gamepad.
+
+
+## But... why?
+
+This is our glorious submission for [Untitled Game Jam #18](https://itch.io/jam/untitled-game-jam-18).
 
 
 ## Credits
